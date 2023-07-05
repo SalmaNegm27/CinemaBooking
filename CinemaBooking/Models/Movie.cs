@@ -17,7 +17,7 @@ namespace CinemaBooking.Models
         public string ImagePath { get; set; }
 
         [Required(ErrorMessage = "Description is Required")]
-        [MaxLength(100)]
+        [StringLength(100, MinimumLength = 10)]
         public string Description { get; set; }
 
         [Required(ErrorMessage = "StartDate is Required")]

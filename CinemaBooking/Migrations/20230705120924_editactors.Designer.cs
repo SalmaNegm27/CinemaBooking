@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CinemaBooking.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230704101935_addtables")]
-    partial class addtables
+    [Migration("20230705120924_editactors")]
+    partial class editactors
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -119,9 +119,6 @@ namespace CinemaBooking.Migrations
                     b.Property<int>("MovieCategory")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MovieId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -138,8 +135,6 @@ namespace CinemaBooking.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CinemaId");
-
-                    b.HasIndex("MovieId");
 
                     b.HasIndex("ProducerId");
 
@@ -160,8 +155,8 @@ namespace CinemaBooking.Migrations
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ImagePath")
                         .IsRequired()
@@ -199,10 +194,6 @@ namespace CinemaBooking.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CinemaBooking.Models.Movie", null)
-                        .WithMany("Movies")
-                        .HasForeignKey("MovieId");
-
                     b.HasOne("CinemaBooking.Models.Producer", "Producer")
                         .WithMany("Movies")
                         .HasForeignKey("ProducerId")
@@ -227,8 +218,6 @@ namespace CinemaBooking.Migrations
             modelBuilder.Entity("CinemaBooking.Models.Movie", b =>
                 {
                     b.Navigation("Actor_Movies");
-
-                    b.Navigation("Movies");
                 });
 
             modelBuilder.Entity("CinemaBooking.Models.Producer", b =>

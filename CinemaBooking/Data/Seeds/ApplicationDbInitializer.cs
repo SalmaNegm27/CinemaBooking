@@ -21,23 +21,24 @@ namespace CinemaBooking.Data.Seeds
                         {
                             FullName="Albacino",
                             Bio ="Action and Drama Italian Actor",
-                            ImagePath = "wwwroot\\Images\\1.jpg"
+                            ImagePath = "Images\\1.jpg"
                         },
                          new Actor()
                          {
                              FullName = "Robert De Niro",
                              Bio = "Action and Drama Italian Actor",
-                            ImagePath = "wwwroot\\Images\\2.jpg"
+                            ImagePath = "Images\\2.jpg"
 
                          },
                          new Actor()
                          {
                              FullName = "joe pesci",
                              Bio = "Action and Drama Italian Actor",
-                            ImagePath = "wwwroot\\Images\\3.jpg"
+                            ImagePath = "Images\\3.jpg"
 
                          },
                     });
+                    context.SaveChanges();
 
                 }
 
@@ -48,7 +49,7 @@ namespace CinemaBooking.Data.Seeds
                         new Cinema()
                         {
                             Name = "Vox",
-                            Descripition = "The biggest blockbusters in Cairo, Egypt are just one click away. Discover the perfect movie for you, find session times and book tickets at VOX Cinemas",
+                            Descripition = " Vox Cinema is The biggest blockbusters in Cairo,  times and book tickets at VOX Cinemas",
 
                             Logo= "wwwroot\\Images\\4.jpg"
                         },
@@ -56,7 +57,7 @@ namespace CinemaBooking.Data.Seeds
                         new Cinema()
                         {
                             Name = "Amir",
-                            Descripition = "The biggest and oldest cinema in Alexandria, Egypt are just one click away. Discover the perfect movie for you",
+                            Descripition = "The biggest and oldest cinema in Alexandria, Egypt are just one click away. Discover the perfect",
 
                             Logo= "wwwroot\\Images\\5.jpg"
                         },
@@ -64,12 +65,35 @@ namespace CinemaBooking.Data.Seeds
                         new Cinema()
                         {
                             Name = "Metro",
-                            Descripition = "Metro Cinema is an independent cinema that is also a community-based not-for-profit society devoted to creating and fostering opportunities for the exhibition of diverse",
+                            Descripition = "Metro Cinema is an independent cinema that is also a community-based not-for-profit",
 
                             Logo= "wwwroot\\Images\\6.jpg"
                         }
 
                     });
+                    context.SaveChanges();
+
+                }
+                if (!context.producers.Any())
+                {
+                    context.producers.AddRange(new List<Producer>()
+                    {
+                        new Producer()
+                        {
+                            FullName = "Martin Scorsese",
+                            Bio = "This is the Bio of the first actor",
+                            ImagePath = "wwwroot\\Images\\10.jpg"
+
+                        },
+                        new Producer()
+                        {
+                            FullName = "Noaln",
+                            Bio = "This is the Bio of the first actor",
+                            ImagePath = "wwwroot\\Images\\11.jpg"
+
+                        },
+                    });
+                    context.SaveChanges();
 
                 }
 
@@ -85,8 +109,8 @@ namespace CinemaBooking.Data.Seeds
                             ImagePath = "wwwroot\\Images\\6.jpg",
                             StartDate = DateTime.Now.AddDays(-10),
                             EndDate = DateTime.Now.AddDays(10),
-                            CinemaId = 3,
-                            ProducerId = 3,
+                            CinemaId = 1,
+                            ProducerId = 1,
                             MovieCategory = Enums.MovieCategory.Action
 
                         },
@@ -98,8 +122,8 @@ namespace CinemaBooking.Data.Seeds
                             ImagePath = "wwwroot\\Images\\8.jpg",
                             StartDate = DateTime.Now.AddDays(-10),
                             EndDate = DateTime.Now.AddDays(10),
-                            CinemaId = 3,
-                            ProducerId = 3,
+                            CinemaId = 2,
+                            ProducerId = 2,
                             MovieCategory = Enums.MovieCategory.Adventure
 
                         },
@@ -112,27 +136,55 @@ namespace CinemaBooking.Data.Seeds
                             StartDate = DateTime.Now.AddDays(-10),
                             EndDate = DateTime.Now.AddDays(10),
                             CinemaId = 3,
-                            ProducerId = 3,
+                            ProducerId = 2,
                             MovieCategory = Enums.MovieCategory.Adventure
 
                         },
 
 
-                    }); 
+                    });
+                    context.SaveChanges();
 
                 }
-                if (!context.producers.Any())
-                {
-                    context.producers.AddRange(new List<Producer>()
-                    {
-                        new Producer()
-                        {
-                            FullName = "Producer 1",
-                            Bio = "This is the Bio of the first actor",
-                            ImagePath = "http://dotnethow.net/images/producers/producer-1.jpeg"
+                
 
+                if (!context.Actor_Movies.Any())
+                {
+                    context.Actor_Movies.AddRange(new List<Actor_Movie>()
+                    {
+                        new Actor_Movie()
+                        {
+                            MovieId= 2,
+                            ActorId = 1,
+                        },
+                           new Actor_Movie()
+                        {
+                            MovieId= 2,
+                            ActorId = 2,
+                        },
+                           new Actor_Movie()
+                        {
+                            MovieId= 3,
+                            ActorId = 3,
+                        },
+                              new Actor_Movie()
+                        {
+                            MovieId= 3,
+                            ActorId = 1,
+                        },
+                                 new Actor_Movie()
+                        {
+                            MovieId= 4,
+                            ActorId = 2,
+                        },
+                                    new Actor_Movie()
+                        {
+                            MovieId= 4,
+                            ActorId = 1,
                         },
                     });
+                    context.SaveChanges();
+
                 }
             }
         }

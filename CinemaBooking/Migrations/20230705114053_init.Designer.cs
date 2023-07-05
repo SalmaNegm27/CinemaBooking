@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CinemaBooking.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230704114207_editimodels")]
-    partial class editimodels
+    [Migration("20230705114053_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -155,8 +155,8 @@ namespace CinemaBooking.Migrations
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ImagePath")
                         .IsRequired()

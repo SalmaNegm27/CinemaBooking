@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CinemaBooking.Migrations
 {
     /// <inheritdoc />
-    public partial class addtables : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -47,7 +47,7 @@ namespace CinemaBooking.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FullName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Bio = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -70,8 +70,7 @@ namespace CinemaBooking.Migrations
                     Price = table.Column<double>(type: "float", nullable: false),
                     MovieCategory = table.Column<int>(type: "int", nullable: false),
                     CinemaId = table.Column<int>(type: "int", nullable: false),
-                    ProducerId = table.Column<int>(type: "int", nullable: false),
-                    MovieId = table.Column<int>(type: "int", nullable: true)
+                    ProducerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -82,11 +81,6 @@ namespace CinemaBooking.Migrations
                         principalTable: "Cinemas",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Movies_Movies_MovieId",
-                        column: x => x.MovieId,
-                        principalTable: "Movies",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Movies_producers_ProducerId",
                         column: x => x.ProducerId,
@@ -128,11 +122,6 @@ namespace CinemaBooking.Migrations
                 name: "IX_Movies_CinemaId",
                 table: "Movies",
                 column: "CinemaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Movies_MovieId",
-                table: "Movies",
-                column: "MovieId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Movies_ProducerId",

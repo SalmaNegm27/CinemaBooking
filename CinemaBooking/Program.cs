@@ -1,4 +1,6 @@
 using CinemaBooking.Contexts;
+using CinemaBooking.Data.Seeds;
+using CinemaBooking.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace CinemaBooking
@@ -12,8 +14,12 @@ namespace CinemaBooking
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("connection")));
-
+            builder.Services.AddScoped<ActorRepository>();
+            //builder.Services.AddScoped<ApplicationDbInitializer>();
             var app = builder.Build();
+
+            ApplicationDbInitializer.Seed(app);
+
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

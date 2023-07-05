@@ -8,7 +8,7 @@ namespace CinemaBooking.Models
         public int ID { get; set; }
 
         [Required(ErrorMessage = "Name is Required")]
-        [StringLength(100)]
+        [StringLength(50)]
         public string FullName { get; set; }
 
         [Required]
