@@ -6,7 +6,7 @@ namespace CinemaBooking.Repositories
         public DbContext DbContext { get; }
         protected readonly DbSet<Producer> _producer;
 
-        public ProducerRepository(DbContext dbContext)
+        public ProducerRepository(ApplicationDbContext dbContext)
         {
             DbContext = dbContext;
             _producer = dbContext.Set<Producer>();

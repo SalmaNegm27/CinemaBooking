@@ -29,15 +29,16 @@ h5{
 }
 </style>
 
-<div class="container">
-    <div class="card-container">
+<div class="container-fluid mt-5">
+    <div class="card-container border-light">
         @foreach (var item in Model)
         {
-            <div class="card" style="width: 18rem;">
+            <div class="card m-2" style="width: 18rem;">
+            
                 <img src=@item.ImagePath class="card-img-top" alt="Actor Photo">
                 <div class="card-body">
-                    <h5  class="card-title text-uppercase">@item.FullName</h5>
-                    <p class="card-content">@item.Bio</p>
+                    <h5  class="card-title text-capitalize fs-4">@item.FullName</h5>
+                    @*<p class="card-content">@item.Bio</p>*@
                     <div class="d-flex justify-content-center">
                     <a>
                         <svg class="m-2" xmlns="http://www.w3.org/2000/svg" width="30" height="25" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
