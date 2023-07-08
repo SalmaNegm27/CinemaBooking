@@ -1,0 +1,55 @@
+﻿@model Actor
+
+
+@{
+    ViewData["Title"] = "Adding new Actor";
+}
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <form asp-action="Create" class="row g-3" enctype="multipart/form-data">
+                <div class="col-md-12">
+                    <label asp-for="FullName" for="validationCustom01" class="form-label">Full name</label>
+                    <input asp-for="FullName" type="text" class="form-control" id="validationCustom01" value="">
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+                <div class="col-md-12">
+                    <label asp-for="Bio" for="validationCustom02" class="form-label">Bio</label>
+                    <input asp-for="Bio" type="text" class="form-control" id="validationCustom02" value="">
+                    <span asp-validation-for="Bio" class="text-danger"></span>
+                </div>
+                <div class="col-md-12">
+                    <label asp-for="ImageFile" for="validationCustom02" class="control-label">Actor Image</label>
+                    <input asp-for="ImageFile" accept="image/*">
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                </div>
+
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <div>
+                    <img id="output" width="200" />
+                </div>
+                
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-outline-success float-right" />
+                    <a class="btn btn-outline-secondary" asp-action="Index">Show All</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function handleFileUpload(event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            $('#output').attr('src', e.target.result);
+            $('#output').show();
+        }
+
+        reader.readAsDataURL(file);
+    }
+
+    $('#file').on('change', handleFileUpload);
+</script>
+

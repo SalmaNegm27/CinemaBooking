@@ -1,0 +1,49 @@
+﻿@model Actor
+
+
+@{
+    ViewData["Title"] = "Details For Actor";
+}
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h3>Detail for @Model.FullName</h3>
+
+            
+               <img  class="border-info rounded-circle" style="max-width:100%" id="output" />
+         
+            <div class=" form-group col-md-12">
+                <label asp-for="ImagePath" for="formFile" class="control-label">Actor Image</label>
+                <input asp-for="ImagePath" class="form-control" readonly>
+
+            </div>
+            <div class=" form-group col-md-12">
+                <label asp-for="FullName" for="validationCustom01" class="form-label">Full name</label>
+                <input asp-for="FullName" type="text" class="form-control" id="validationCustom01" readonly>
+
+            </div>
+            <div class="form-group col-md-12">
+                <label asp-for="Bio" for="validationCustom02" class="form-label">Bio</label>
+                <input asp-for="Bio" type="text" class="form-control" id="validationCustom02" readonly>
+
+            </div>
+
+
+            <div class="form-group col-md-12 mt-3">
+                <input type="submit" value="Create" class="btn btn-outline-success float-right" />
+                <a class="btn btn-outline-succss float-right" asp-action="Edit" asp-route-id="@Model.ID"></a>
+                <a class="btn btn-outline-secondary" asp-action="Index">Show All</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var output = document.getElementById('output');
+            output.src = $("#ImagePath").val();
+        })
+    </script>
+}
+

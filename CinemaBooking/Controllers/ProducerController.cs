@@ -1,10 +1,12 @@
 ﻿
+using CinemaBooking.Repositories.ProducerRepository;
+
 namespace CinemaBooking.Controllers
 {
     public class ProducerController : Controller
     {
-        private readonly ProducerRepository _producerrepository;
-        public ProducerController(ProducerRepository producerrepository)
+        private readonly IProducerRepository _producerrepository;
+        public ProducerController(IProducerRepository producerrepository)
         {
             _producerrepository = producerrepository;
         }

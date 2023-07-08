@@ -5,9 +5,9 @@
         public MovieRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
-        //public async Task<List<Movie>> GetByExprissionAsync()
-        //{
-        //    return await GetByExprissionAsync(m => m.Cinema);
-        //}
+        public async override Task<IEnumerable<Movie>> GetAllAsync()
+        {
+            return await  _tables.Include(c => c.Cinema).ToListAsync();
+        }
     }
 }

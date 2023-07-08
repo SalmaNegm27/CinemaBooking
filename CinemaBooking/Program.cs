@@ -3,6 +3,7 @@ using CinemaBooking.Data.Seeds;
 using CinemaBooking.Repositories.ActorRepository;
 using CinemaBooking.Repositories.CinemaRepository;
 using CinemaBooking.Repositories.MovieRepository;
+using CinemaBooking.Repositories.ProducerRepository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,7 +22,7 @@ namespace CinemaBooking
             builder.Services.AddScoped<IActorRepository,ActorRepository>();
             builder.Services.AddScoped<ICinemaRepository,CinemaRepository>();
             builder.Services.AddScoped<IMovieRepository, MovieRepository>();
-            builder.Services.AddScoped<ProducerRepository>();
+            builder.Services.AddScoped<IProducerRepository,ProducerRepository>();
             //builder.Services.AddScoped<ApplicationDbInitializer>();
             var app = builder.Build();
 

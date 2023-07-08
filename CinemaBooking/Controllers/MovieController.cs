@@ -14,7 +14,7 @@ namespace CinemaBooking.Controllers
 
         public async Task<IActionResult> Index()
         {
-          var movies = await _movieRepository.IncludePropertiesAsync();
+          var movies = await _movieRepository.GetAllAsync();
             return View(movies);
         }
     }

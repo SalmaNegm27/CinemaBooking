@@ -64,16 +64,6 @@
             return await query.Where(expression).ToListAsync();
         }
 
-        //public async Task<List<T>> IncludePropertiesAsync(params Expression<Func<T, object>>[] includeProperties)
-        //{
-        //    IQueryable<T> query = _tables;
-
-        //    foreach (var includeProperty in includeProperties)
-        //    {
-        //        query = query.Include(includeProperty);
-        //    }
-
-        //    return await query.ToListAsync();
-        //}
+       
     }
 }
