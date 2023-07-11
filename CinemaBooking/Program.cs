@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using CinemaBooking.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using CinemaBooking.Repositories.CartItemRepository;
 
 namespace CinemaBooking
 {
@@ -26,6 +27,7 @@ namespace CinemaBooking
             builder.Services.AddScoped<ICinemaRepository,CinemaRepository>();
             builder.Services.AddScoped<IMovieRepository, MovieRepository>();
             builder.Services.AddScoped<IProducerRepository,ProducerRepository>();
+            builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
             //builder.Services.AddScoped<ApplicationDbInitializer>();
 
         
@@ -53,7 +55,7 @@ namespace CinemaBooking
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

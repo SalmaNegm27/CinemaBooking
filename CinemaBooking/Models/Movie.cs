@@ -44,6 +44,7 @@ namespace CinemaBooking.Models
 
         public List<Actor_Movie> Actor_Movies { get; set; } = new List<Actor_Movie>();
 
+        public List<CartItem> CartItems { get; set; } = new List<CartItem>();
 
 
     }

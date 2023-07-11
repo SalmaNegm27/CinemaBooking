@@ -32,5 +32,13 @@ namespace CinemaBooking.Controllers
             return View(movies);
 
         }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var movie = await _movieRepository.GetByIdAsync(id);
+            return View(movie);
+        }
+
+
     }
 }

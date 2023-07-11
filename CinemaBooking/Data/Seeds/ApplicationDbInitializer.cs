@@ -218,7 +218,7 @@ namespace CinemaBooking.Data.Seeds
                         Email = adminUserEmail,
                         EmailConfirmed = true
                     };
-                    await userManager.CreateAsync(newAdminUser, "Coding@1234?");
+                    await userManager.CreateAsync(newAdminUser, "`");
                     await userManager.AddToRoleAsync(newAdminUser, UserRole.Admin);
                 }
 

@@ -9,16 +9,11 @@
         {
             return await  _tables.Include(c => c.Cinema).ToListAsync();
         }
+          public async override Task<Movie> GetByIdAsync(int id)
+        {
+            return await  _tables.Include(c => c.Cinema).FirstOrDefaultAsync(c=>c.Id == id);
+        }
 
-        //public Task Search(string SeaerchString)
-        //{
-        //    var movies = _dbContext.
-
-
-        //    if (!string.IsNullOrEmpty(SeaerchString))
-        //    {
-
-        //    }
-        //}
+        
     }
 }
