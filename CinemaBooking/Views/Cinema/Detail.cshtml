@@ -1,0 +1,55 @@
+﻿@model Cinema
+
+
+@{
+    ViewData["Title"] = "Details For Cinema ";
+}
+<style>
+    img {
+        width: 100px;
+        height: 100px;
+    }
+</style>
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr class="text-center">
+                <th>Logo</th>
+                <th>Name</th>
+                <th>Decription</th>
+
+            </tr>
+
+        </thead>
+        <tbody>
+
+            <tr class="text-center">
+                <td class="align-middle">
+                    <img class="rounded-circle" style="max-width"  src="~/Images/@Model.Logo" />
+                </td>
+                <td class="align-middle">
+                    <p class="text-capitalize fs-4">@Model.Name</p>
+                </td>
+                <td class="align-middle">
+                    <p class="text-capitalize fs-5">
+                        @Model.Descripition
+                    </p>
+                </td>
+
+            </tr>
+            
+        </tbody>
+
+
+    </table>
+
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var imagePath = $("#ProfilePicturePreview").attr("src");
+            $("#ProfilePicturePreview").attr("src", imagePath);
+        });
+    </script>
+}

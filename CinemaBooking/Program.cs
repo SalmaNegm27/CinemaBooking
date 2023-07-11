@@ -4,8 +4,11 @@ using CinemaBooking.Repositories.ActorRepository;
 using CinemaBooking.Repositories.CinemaRepository;
 using CinemaBooking.Repositories.MovieRepository;
 using CinemaBooking.Repositories.ProducerRepository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using CinemaBooking.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace CinemaBooking
 {
@@ -24,9 +27,23 @@ namespace CinemaBooking
             builder.Services.AddScoped<IMovieRepository, MovieRepository>();
             builder.Services.AddScoped<IProducerRepository,ProducerRepository>();
             //builder.Services.AddScoped<ApplicationDbInitializer>();
-            var app = builder.Build();
+
+        
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.Services.AddMemoryCache();
+            builder.Services.AddSession();
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            });
+
+            builder.Services.AddControllersWithViews();
+    
+        var app = builder.Build();
 
             ApplicationDbInitializer.Seed(app);
+            ApplicationDbInitializer.SeedUsersAndRolesAsync(app).Wait();
+
 
 
             // Configure the HTTP request pipeline.
@@ -41,7 +58,9 @@ namespace CinemaBooking
             app.UseStaticFiles();
 
             app.UseRouting();
+                        app.UseAuthentication();;
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

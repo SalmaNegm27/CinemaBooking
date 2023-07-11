@@ -2,5 +2,6 @@
 {
     public interface IMovieRepository :IBaseRepository<Movie>
     {
+        //Task Search(string SeaerchString);
     }
 }

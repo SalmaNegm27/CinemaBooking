@@ -9,5 +9,16 @@
         {
             return await  _tables.Include(c => c.Cinema).ToListAsync();
         }
+
+        //public Task Search(string SeaerchString)
+        //{
+        //    var movies = _dbContext.
+
+
+        //    if (!string.IsNullOrEmpty(SeaerchString))
+        //    {
+
+        //    }
+        //}
     }
 }

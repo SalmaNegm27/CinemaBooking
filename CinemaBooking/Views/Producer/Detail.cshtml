@@ -1,8 +1,8 @@
-﻿@model Actor
+﻿@model Producer
 
 
 @{
-    ViewData["Title"] = "Details For Actor";
+    ViewData["Title"] = "Details For Producer";
 }
 <div class="container">
     <div class="card">
@@ -28,11 +28,11 @@
                 <input asp-for="Bio" type="text" class="form-control" id="validationCustom02" readonly>
             </div>
 
-            <div class="form-group col-md-12 mt-3 d-flex justify-content-center">
-               
+           @* <div class="form-group col-md-12 mt-3 d-flex justify-content-center">
+                <input type="submit" value="Edit" class="btn btn-outline-success float-right" />
                 <a class="btn btn-outline-succss float-right" asp-action="Edit" asp-route-id="@Model.ID"></a>
             </div>
-
+*@
         </div>
     </div>
 </div>

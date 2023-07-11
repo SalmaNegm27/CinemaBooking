@@ -1,8 +1,9 @@
-﻿@model Actor
+﻿
+@model Producer
 
 
 @{
-    ViewData["Title"] = "Adding new Actor";
+    ViewData["Title"] = "Adding Producer";
 }
 <div class="container">
     <div class="card">
@@ -11,7 +12,7 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger">
                 </div>
                     <div class="form-group col-md-12">
-                        <label asp-for="FullName" for="validationCustom01" class="form-label">Full name</label>
+                        <label asp-for="FullName" for="validationCustom01" class="form-label">Name</label>
                         <input asp-for="FullName" type="text" class="form-control" id="validationCustom01" value="">
                         <span asp-validation-for="FullName" class="text-danger"></span>
                     </div>
@@ -28,7 +29,7 @@
 
                     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                     <div>
-                        <img id="output" width="200" />
+                        <img id="output" width="200"/>
                     </div>
 
                     <div class="form-group">

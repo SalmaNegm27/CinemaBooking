@@ -1,4 +1,6 @@
-﻿namespace CinemaBooking.Repositories.BaseRepository
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+
+namespace CinemaBooking.Repositories.BaseRepository
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
@@ -27,32 +29,27 @@
             return Task.CompletedTask;
         }
 
-        public virtual async Task<T> DeleteAsync(int id)
+        public virtual async Task DeleteAsync(int id)
         {
             var result = await GetByIdAsync(id);
             if (result == null)
                 throw new Exception("The Entity doesnt exist");
             _tables.Remove(result);
-            return result;
+            _dbContext.SaveChanges();
+          
         }
 
-        public virtual async Task<T> EditAsync(int id, T entity)
+        public virtual async Task EditAsync(int id, T entity)
         {
-            var result = await GetByIdAsync(id);
-            if (result != null)
-            {
-                var updatedEntity = _tables.Update(entity).Entity;
-                await _dbContext.SaveChangesAsync();
-                return updatedEntity;
-            }
-            else
-            {
-                throw new Exception();
-            }
+            EntityEntry entityEntry = _dbContext.Entry<T>(entity);
+            entityEntry.State = EntityState.Modified;
+
+            await _dbContext.SaveChangesAsync();
         }
 
 
-        public virtual async Task<List<T>> GetByExprissionAsync(Expression<Func<T, bool>> expression , params Expression<Func<T, object>>[] includeProperties)
+
+        public virtual async Task<List<T>> GetByExprissionAsync(Expression<Func<T, bool>> expression, params Expression<Func<T, object>>[] includeProperties)
         {
             IQueryable<T> query = _tables;
 
@@ -64,6 +61,6 @@
             return await query.Where(expression).ToListAsync();
         }
 
-       
+
     }
 }

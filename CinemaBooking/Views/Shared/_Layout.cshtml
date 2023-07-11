@@ -1,4 +1,5 @@
-﻿﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,28 +26,44 @@
                                 Movies
                             </a>
                         </li>
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Mangements
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item text-dark" asp-controller="Actor" asp-action="index"><i class="bi bi-film"></i>Actors</a></li>
-                                <li><a class="dropdown-item text-dark" asp-controller="Producer" asp-action="index">Producers</a></li>
-                                <li><a class="dropdown-item text-dark" asp-controller="Cinema" asp-action="index">Cinemas</a></li>
-                            </ul>
-                        </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Mangements
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item text-dark" asp-controller="Actor" asp-action="index"><i class="bi bi-film"></i>Actors</a></li>
+                                    <li><a class="dropdown-item text-dark" asp-controller="Producer" asp-action="index">Producers</a></li>
+                                    <li><a class="dropdown-item text-dark" asp-controller="Cinema" asp-action="index">Cinemas</a></li>
+                                </ul>
+                            </li>
+                        }
+                       
+  
+
 
                     </ul>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <form method="get" asp-controller="Movie" asp-action="index" class="d-flex" role="search">
+                        <input class="form-control me-2" name="stringSearch" type="search" placeholder="Search" aria-label="Search">
                         <a class="mt-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                             </svg>
                         </a>
-
+                           <a class="nav-link text-dark" aria-current="page" asp-controller="Account" asp-action="login">
+                                Login
+                            </a>
                     </form>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+
+                        <form class="nav-link" asp-controller="Account" asp-action="logout">
+                            <input type="submit" value="Logout" />
+                        </form>
+
+                    }
                 </div>
             </div>
         </nav>
