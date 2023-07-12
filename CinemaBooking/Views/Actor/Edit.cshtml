@@ -15,10 +15,10 @@
                 </div>
 
                 <div class="form-group col-md-12">
-                    <label asp-for="ImagePath" for="formFile" class="control-label">Actor Image</label>
-                    <input asp-for="ImagePath" class="form-control" readonly>
-                </div>
-
+                        <label asp-for="ImageFile" for="validationCustom02" class="control-label">Actor Image</label>
+                        <input asp-for="ImageFile" accept="image/*">
+                        <span asp-validation-for="ImageFile" class="text-danger"></span>
+                    </div>
                 <div class="form-group col-md-12">
                     <label asp-for="FullName" for="validationCustom01" class="form-label">Full name</label>
                     <input asp-for="FullName" type="text" class="form-control" id="validationCustom01">
@@ -41,9 +41,18 @@
 
 @section Scripts{
     <script>
-        $(document).ready(function() {
-            var imagePath = $("#ProfilePicturePreview").attr("src");
-            $("#ProfilePicturePreview").attr("src", imagePath);
-        });
+        function handleFileUpload(event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            $('#ProfilePicturePreview').attr('src', e.target.result);
+            $('#ProfilePicturePreview').show();
+        }
+
+        reader.readAsDataURL(file);
+    }
+
+    $('#file').on('change', handleFileUpload);
     </script>
 }

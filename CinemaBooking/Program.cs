@@ -9,7 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using CinemaBooking.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using CinemaBooking.Repositories.CartItemRepository;
+using CinemaBooking.Repositories.CartRepository;
+using CinemaBooking.Services;
 
 namespace CinemaBooking
 {
@@ -27,10 +28,11 @@ namespace CinemaBooking
             builder.Services.AddScoped<ICinemaRepository,CinemaRepository>();
             builder.Services.AddScoped<IMovieRepository, MovieRepository>();
             builder.Services.AddScoped<IProducerRepository,ProducerRepository>();
-            builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
+            builder.Services.AddScoped<ICartRepository, CartRepository>();
+            builder.Services.AddScoped<CartService>();
             //builder.Services.AddScoped<ApplicationDbInitializer>();
 
-        
+
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddMemoryCache();
             builder.Services.AddSession();

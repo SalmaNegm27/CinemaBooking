@@ -70,13 +70,21 @@ namespace CinemaBooking.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id,[Bind("ID", "FullName", "Bio", "ImagePath")] Actor actor)
+        public async Task<IActionResult> Edit(int id,[Bind("ID", "FullName", "Bio", "ImageFile")] Actor actor)
         {
             if (!ModelState.IsValid)
             {
                 return View(actor);
             }
-           
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            string fileName = Path.GetFileNameWithoutExtension(actor.ImageFile.FileName);
+            string extension = Path.GetExtension(actor.ImageFile.FileName);
+            actor.ImagePath = fileName = fileName + DateTime.Now.ToString("yymmssff") + extension;
+            string path = Path.Combine(wwwRootPath + "/Images/", fileName);
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                await actor.ImageFile.CopyToAsync(fileStream);
+            }
 
             await _actorRepository.EditAsync(id, actor);
 
