@@ -2,7 +2,7 @@
 
 <h2>Shopping Cart</h2>
 
-@if (Model.Items.Count() == 0)
+@if (Model.CartItems.Count() == 0)
 {
     <p>Your cart is empty.</p>
 }
@@ -20,16 +20,22 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.Items)
+            @foreach (var item in Model.CartItems)
             {
                 <tr>
-                   @* <td>@item.Movie.Name</td>*@
+                    <td></td>
+                    <td>@item.MovieName</td>
                     <td>@item.Price</td>
-                    <td>@item.Amount</td>
-                    <td>@item.Total</td>
+                    <td>
+                      
+                        <input type="number" name="amount" value="@item.Amount" min="1" max="20" />
+                    </td>
+                    <td>
+                        @item.Total
+                    </td>
                     <td>
                         <form method="post" asp-action="RemoveFromCart">
-                            <input type="hidden" name="cartItemId" value="@item.ID" />
+                            <input type="hidden" name="cartItemId" value="@item.ID"/>
                             <button type="submit" class="btn btn-link">Remove</button>
                         </form>
                     </td>
@@ -39,15 +45,15 @@ else
         </tbody>
     </table>
 
-    <p>Total: @Model.Items.Sum(i => i.Total)</p>
-  
+    <p>Total: @Model.CartItems.Sum(i => i.Total)</p>
+
     <div class="d-flex justify-content-start">
 
-    <form method="post" asp-action="Sucess">
-        <button type="submit" class="btn btn-primary">Checkout</button>
-    </form>
+        <form method="post">
+            <button type="submit" class="btn btn-primary" asp-action="Sucess">Checkout</button>
+        </form>
     </div>
-  <div class="d-flex justify-content-end">
-    <a class="btn btn-primary" asp-controller="Movie" asp-action="Index">Add More Item</a>
+    <div class="d-flex justify-content-end">
+        <a class="btn btn-primary" asp-controller="Movie" asp-action="Index">Add More Item</a>
     </div>
 }

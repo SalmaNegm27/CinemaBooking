@@ -107,7 +107,7 @@ namespace CinemaBooking.Data.Seeds
                         {
                             Name = "ScareFace",
                             Description = "Italian Action Movie",
-                            Price = 39.50,
+                            Price = 39,
                             ImagePath = "6.jpg",
                             StartDate = DateTime.Now.AddDays(-10),
                             EndDate = DateTime.Now.AddDays(10),
@@ -191,54 +191,52 @@ namespace CinemaBooking.Data.Seeds
             }
         }
 
+
         public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
         {
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
-
-                //Roles
                 var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
+                // Create Roles if they don't exist
                 if (!await roleManager.RoleExistsAsync(UserRole.Admin))
                     await roleManager.CreateAsync(new IdentityRole(UserRole.Admin));
                 if (!await roleManager.RoleExistsAsync(UserRole.User))
                     await roleManager.CreateAsync(new IdentityRole(UserRole.User));
 
-                //Users
-                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-                string adminUserEmail = "admin@etickets.com";
-
-                var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
-                if (adminUser == null)
-                {
+                // Create Admin User if it doesn't exist
+                //var adminUser = await userManager.FindByEmailAsync("admin@etickets.com");
+                //if (adminUser == null)
+                //{
                     var newAdminUser = new ApplicationUser()
                     {
                         FullName = "Admin User",
                         UserName = "admin-user",
-                        Email = adminUserEmail,
+                        Email = "admin@etickets.com",
                         EmailConfirmed = true
                     };
-                    await userManager.CreateAsync(newAdminUser, "`");
+                    await userManager.CreateAsync(newAdminUser, "Salma123@");
                     await userManager.AddToRoleAsync(newAdminUser, UserRole.Admin);
-                }
+                // }
 
-
-                string appUserEmail = "user@etickets.com";
-
-                var appUser = await userManager.FindByEmailAsync(appUserEmail);
-                if (appUser == null)
-                {
+                // Create Application User if it doesn't exist
+                //var appUser = await userManager.FindByEmailAsync("user@etickets.com");
+                //if (appUser == null)
+                //{
                     var newAppUser = new ApplicationUser()
                     {
                         FullName = "Application User",
                         UserName = "app-user",
-                        Email = appUserEmail,
+                        Email = "user@etickets.com",
                         EmailConfirmed = true
                     };
-                    await userManager.CreateAsync(newAppUser, "Coding@1234?");
+                    await userManager.CreateAsync(newAppUser, "Salma123@");
                     await userManager.AddToRoleAsync(newAppUser, UserRole.User);
-                }
+                //}
             }
         }
+
     }
 }
+

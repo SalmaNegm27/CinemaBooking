@@ -28,7 +28,7 @@ namespace CinemaBooking.Models
 
         [Required(ErrorMessage = "Price is Required")]
 
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         [Required]
         public MovieCategory MovieCategory { get; set; }
 

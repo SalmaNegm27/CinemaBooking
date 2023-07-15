@@ -1,16 +1,11 @@
-using CinemaBooking.Contexts;
 using CinemaBooking.Data.Seeds;
 using CinemaBooking.Repositories.ActorRepository;
 using CinemaBooking.Repositories.CinemaRepository;
 using CinemaBooking.Repositories.MovieRepository;
 using CinemaBooking.Repositories.ProducerRepository;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using CinemaBooking.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using CinemaBooking.Repositories.CartRepository;
-using CinemaBooking.Services;
+using CinemaBooking.Repositories.CartItemRepository;
 
 namespace CinemaBooking
 {
@@ -28,8 +23,9 @@ namespace CinemaBooking
             builder.Services.AddScoped<ICinemaRepository,CinemaRepository>();
             builder.Services.AddScoped<IMovieRepository, MovieRepository>();
             builder.Services.AddScoped<IProducerRepository,ProducerRepository>();
-            builder.Services.AddScoped<ICartRepository, CartRepository>();
-            builder.Services.AddScoped<CartService>();
+            builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
+        
+            //builder.Services.AddScoped<CartService>();
             //builder.Services.AddScoped<ApplicationDbInitializer>();
 
 
@@ -45,8 +41,8 @@ namespace CinemaBooking
     
         var app = builder.Build();
 
+            ApplicationDbInitializer.SeedUsersAndRolesAsync(app).Wait();
             ApplicationDbInitializer.Seed(app);
-            //ApplicationDbInitializer.SeedUsersAndRolesAsync(app).Wait();
 
 
 
@@ -62,7 +58,7 @@ namespace CinemaBooking
             app.UseStaticFiles();
 
             app.UseRouting();
-                        app.UseAuthentication();;
+                       
 
             app.UseAuthentication();
             app.UseAuthorization();

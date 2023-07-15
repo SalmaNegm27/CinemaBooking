@@ -4,16 +4,16 @@
 
 namespace CinemaBooking.Migrations
 {
-    public partial class cart : Migration
+    public partial class updateCaertItemtTotal : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<double>(
+            migrationBuilder.AddColumn<decimal>(
                 name: "Total",
                 table: "CartItems",
-                type: "float",
+                type: "decimal(18,2)",
                 nullable: false,
-                defaultValue: 0.0);
+                defaultValue: 0m);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
