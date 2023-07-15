@@ -1,7 +1,6 @@
 ﻿using CinemaBooking.Data.Const;
 using CinemaBooking.Data.ViewModels;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 
 namespace CinemaBooking.Controllers
 {

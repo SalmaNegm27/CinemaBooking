@@ -21,12 +21,12 @@ namespace CinemaBooking.Repositories.BaseRepository
             return await _tables.FindAsync(id);
         }
 
-        public virtual Task AddAsync(T entity)
+        public virtual async Task AddAsync(T entity)
         {
 
-            _tables.Add(entity);
-            _dbContext.SaveChangesAsync();
-            return Task.CompletedTask;
+          await  _tables.AddAsync(entity);
+          await  _dbContext.SaveChangesAsync();
+            //return Task.CompletedTask;
         }
 
         public virtual async Task DeleteAsync(int id)

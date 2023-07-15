@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CinemaBooking.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230710093610_init")]
+    [Migration("20230713110521_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -130,6 +130,62 @@ namespace CinemaBooking.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("CinemaBooking.Models.Cart", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("CinemaBooking.Models.CartItem", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MovieName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("CinemaBooking.Models.Cinema", b =>
@@ -384,6 +440,36 @@ namespace CinemaBooking.Migrations
                     b.Navigation("Movie");
                 });
 
+            modelBuilder.Entity("CinemaBooking.Models.Cart", b =>
+                {
+                    b.HasOne("CinemaBooking.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("CinemaBooking.Models.CartItem", b =>
+                {
+                    b.HasOne("CinemaBooking.Models.Cart", "Cart")
+                        .WithMany("CartItems")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CinemaBooking.Models.Movie", "Movie")
+                        .WithMany("CartItems")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Movie");
+                });
+
             modelBuilder.Entity("CinemaBooking.Models.Movie", b =>
                 {
                     b.HasOne("CinemaBooking.Models.Cinema", "Cinema")
@@ -459,6 +545,11 @@ namespace CinemaBooking.Migrations
                     b.Navigation("Actor_Movies");
                 });
 
+            modelBuilder.Entity("CinemaBooking.Models.Cart", b =>
+                {
+                    b.Navigation("CartItems");
+                });
+
             modelBuilder.Entity("CinemaBooking.Models.Cinema", b =>
                 {
                     b.Navigation("Movies");
@@ -467,6 +558,8 @@ namespace CinemaBooking.Migrations
             modelBuilder.Entity("CinemaBooking.Models.Movie", b =>
                 {
                     b.Navigation("Actor_Movies");
+
+                    b.Navigation("CartItems");
                 });
 
             modelBuilder.Entity("CinemaBooking.Models.Producer", b =>

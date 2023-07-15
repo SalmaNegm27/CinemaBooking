@@ -4,7 +4,7 @@
 
 namespace CinemaBooking.Migrations
 {
-    public partial class cart2 : Migration
+    public partial class updateCaertItemtTo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

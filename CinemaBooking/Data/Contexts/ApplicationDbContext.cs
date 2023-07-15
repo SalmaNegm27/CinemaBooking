@@ -38,6 +38,7 @@ namespace CinemaBooking.Contexts
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Producer> producers { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<Cart> Carts { get; set; }
 
     }
 }
