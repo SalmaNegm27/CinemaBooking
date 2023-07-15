@@ -46,7 +46,7 @@ namespace CinemaBooking
         var app = builder.Build();
 
             ApplicationDbInitializer.Seed(app);
-            ApplicationDbInitializer.SeedUsersAndRolesAsync(app).Wait();
+            //ApplicationDbInitializer.SeedUsersAndRolesAsync(app).Wait();
 
 
 
