@@ -1,5 +1,4 @@
-﻿
-@model IEnumerable<Movie>
+﻿@model IEnumerable<Movie>
 
 @{
     ViewData["Title"] = "List of Movies";
@@ -55,16 +54,27 @@
                     <div class="col-md-12">
                         <div class="card-footer ">
                             <p class="card-text">
+                               
+                                <form method="post" asp-controller="CartItem" asp-action="AddItem" class="d-inline">
+                                    <input type="hidden" name="movieId" value="@item.Id" />
+                                    <button type="submit" class="btn btn-success text-white @((DateTime.Now > item.EndDate) ? "disabled" : "")"
+                                        style="background-color: darkslategrey">
+                                        <i class="bi bi-cart-plus"></i> Add to Cart (Price @item.Price.ToString("c"))
+                                    </button>
+                                </form>
+                                <div class="d-flex justify-content-between mt-2">
                                 <a class="btn btn-outline-primary float-right" asp-action="Details" asp-route-id="@item.Id">
                                     <i class="bi bi-eye-fill"></i> Show Details
                                 </a>
-                               <form method="post"asp-controller="CartItem" asp-action="AddItem" class="d-inline">
-                                <input type="hidden" name="movieId" value="@item.Id" />
-                                <button type="submit" class="btn btn-success text-white @((DateTime.Now > item.EndDate) ? "disabled" : "")"
-                                        style="background-color: darkslategrey">
-                                    <i class="bi bi-cart-plus"></i> Add to Cart (Price @item.Price.ToString("c"))
-                                </button>
-                            </form>
+
+                                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                {
+                                    <form method="post" asp-action="Delete" class="d-inline">
+                                        <input type="hidden" name="movieId" value="@item.Id" />
+                                        <button type="submit" class="btn btn-danger">Remove</button>
+                                    </form>
+                                }
+                                </div>
                             </p>
                         </div>
                     </div>

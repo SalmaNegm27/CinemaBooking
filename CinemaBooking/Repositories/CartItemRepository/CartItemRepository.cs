@@ -10,5 +10,10 @@
         {
             return Amount * Price;
         }
+
+        public async Task<bool> IsMovieInCart(int movieId)
+        {
+            return await _tables.AnyAsync(c => c.MovieId == movieId);
+        }
     }
 }
