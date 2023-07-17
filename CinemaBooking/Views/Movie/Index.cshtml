@@ -11,9 +11,9 @@
             <div class="card mb-3" style="max-width: 540px;">
                 <div class="row g-0">
                     <div class="col-md-12">
-                        <div class="card-header text-white" style="background-color:darkgrey">
+                        <div class="card-header text-white" style="background-color:#9a8c98">
                             <p class="card-text">
-                                <h5 class="card-title">
+                                <h5  class="card-title">
                                     @item.Name
                                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                                     {
@@ -57,19 +57,19 @@
                                
                                 <form method="post" asp-controller="CartItem" asp-action="AddItem" class="d-inline">
                                     <input type="hidden" name="movieId" value="@item.Id" />
-                                    <button type="submit" class="btn btn-success text-white @((DateTime.Now > item.EndDate) ? "disabled" : "")"
-                                        style="background-color: darkslategrey">
+                                    <button type="submit" class="btn text-white @((DateTime.Now > item.EndDate) ? "disabled" : "")"
+                                        style="background-color: #A076F9">
                                         <i class="bi bi-cart-plus"></i> Add to Cart (Price @item.Price.ToString("c"))
                                     </button>
                                 </form>
                                 <div class="d-flex justify-content-between mt-2">
-                                <a class="btn btn-outline-primary float-right" asp-action="Details" asp-route-id="@item.Id">
-                                    <i class="bi bi-eye-fill"></i> Show Details
+                                <a class="btn  float-right" asp-action="Details" asp-route-id="@item.Id" style="color: #A076F9">
+                                    Show Details
                                 </a>
 
                                 @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                                 {
-                                    <form method="post" asp-action="Delete" class="d-inline">
+                                    <form method="post" asp-action="Delete" id="popupContainer" class="d-inline">
                                         <input type="hidden" name="movieId" value="@item.Id" />
                                         <button type="submit" class="btn btn-danger">Remove</button>
                                     </form>
@@ -83,4 +83,5 @@
         </div>
     }
 </div>
-
+<script>
+</script>

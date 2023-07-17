@@ -21,9 +21,12 @@ namespace CinemaBooking.Models
         public string Description { get; set; }
 
         [Required(ErrorMessage = "StartDate is Required")]
+        [DisplayFormat(DataFormatString = "{0:dd MMM yy}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
 
         [Required(ErrorMessage = "EndDate is Required")]
+        [DisplayFormat(DataFormatString = "{0:dd MMM yy}", ApplyFormatInEditMode = true)]
+
         public DateTime EndDate { get; set; }
 
         [Required(ErrorMessage = "Price is Required")]
