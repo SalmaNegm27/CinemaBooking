@@ -1,6 +1,4 @@
-﻿
-
-using CinemaBooking.Repositories.CartItemRepository;
+﻿using CinemaBooking.Repositories.CartItemRepository;
 using CinemaBooking.Repositories.MovieRepository;
 
 namespace CinemaBooking.Controllers
@@ -58,7 +56,8 @@ namespace CinemaBooking.Controllers
             #endregion
             if (isMovieInCart)
             {
-                return View("DeleteError");
+                //return PartialView("_DeleteErrorPertialView");
+                return Json(new {isInCart=true});
             }
             await _movieRepository.DeleteAsync(movieId);
             return RedirectToAction("Index");
