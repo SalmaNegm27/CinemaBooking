@@ -13,7 +13,7 @@
                     <div class="col-md-12">
                         <div class="card-header text-white" style="background-color:#9a8c98">
                             <p class="card-text">
-                                <h5  class="card-title">
+                                <h5 class="card-title">
                                     @item.Name
                                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                                     {
@@ -54,7 +54,7 @@
                     <div class="col-md-12">
                         <div class="card-footer ">
                             <p class="card-text">
-                               
+
                                 <form method="post" asp-controller="CartItem" asp-action="AddItem" class="d-inline">
                                     <input type="hidden" name="movieId" value="@item.Id" />
                                     <button type="submit" class="btn text-white @((DateTime.Now > item.EndDate) ? "disabled" : "")"
@@ -63,24 +63,24 @@
                                     </button>
                                 </form>
                                 <div class="d-flex justify-content-between mt-2">
-                                <a class="btn  float-right" asp-action="Details" asp-route-id="@item.Id" style="color: #A076F9">
-                                    Show Details
-                                </a>
+                                    <a class="btn  float-right" asp-action="Details" asp-route-id="@item.Id" style="color: #A076F9">
+                                        Show Details
+                                    </a>
 
-                                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                                {
-                                    <form method="post" asp-action="Delete" id="popupContainer" class="d-inline">
-                                        <input type="hidden" name="movieId" value="@item.Id" />
-                                        @*<button type="submit" class="btn btn-danger">Remove</button>*@
-                                        <button id="delete-movie" data-movie-id="@item.Id">Delete</button>
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                    {
+                                        <form method="post" asp-action="Delete" id="popupContainer" class="d-inline">
+                                            <input type="hidden" name="movieId" value="@item.Id" />
+                                            @*<button type="submit" class="btn btn-danger">Remove</button>*@
+                                            <button class="delete-movie" data-movie-id="@item.Id" data-bs-toggle="modal" data-bs-target="#popup">Delete</button>
+                                            @await Html.PartialAsync("_DeleteErrorPopup")
+                                        </form>
+                                    }
 
-                                    </form>
-                                }
-                             
                                 </div>
-            
+
                             </p>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -88,45 +88,44 @@
         </div>
     }
 </div>
-<div id="popupContainer">
-
-@await Html.PartialAsync("_DeleteErrorPertialView")
-</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  $(document).ready(function() {
-  $(document).on("click", "#delete-movie", function(event) {
-    event.preventDefault(); // Prevent the default form submission
+    $(document).ready(function() {
+        $(".delete-movie").click(function(event) {
+            event.preventDefault(); 
 
-    var movieId = $(this).data("movie-id");
+            var deleteButton = $(this);
+            var movieId = deleteButton.data("movie-id");
+            $("#popup").hide();
 
-    $.ajax({
-      url: "/Movie/Delete",
-      type: "POST",
-      data: { movieId: movieId },
-      success: function(response) {
-        console.log(response); // Log the response to the console for debugging
+            deleteButton.prop("disabled", true);
 
-        if (response.isInCart) {
-          // Show the popup
-          console.log("Showing popup"); // Log a message to the console for debugging
-          $("#popup").show();
-        } else {
-          // Continue with the movie deletion
-          console.log("Redirecting to index"); // Log a message to the console for debugging
-          window.location.href = "/Movie/Index";
-        }
-      },
-      error: function(xhr, status, error) {
-        console.error(error); // Log any errors to the console
-      }
+            $.ajax({
+                url: "/Movie/Delete",
+                type: "POST",
+                data: { movieId: movieId },
+                success: function(response) {
+                    if (response.isInCart) {
+                        $("#popup").show();
+                    } else {
+                      
+                        window.location.href = "/Movie";
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                },
+                complete: function() {
+                
+                    deleteButton.prop("disabled", false);
+                }
+            });
+        });
+
+        $("#close-popup").click(function() {
+            
+            $("#popup").hide();
+        });
     });
-  });
-
-  $("#close-popup").click(function() {
-    // Hide the popup
-    $("#popup").hide();
-  });
-});
-
 
 </script>
