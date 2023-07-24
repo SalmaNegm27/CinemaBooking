@@ -1,6 +1,5 @@
 ﻿using CinemaBooking.Data.Const;
 using CinemaBooking.Data.ViewModels;
-using Microsoft.AspNetCore.Identity;
 
 namespace CinemaBooking.Controllers
 {
@@ -17,7 +16,7 @@ namespace CinemaBooking.Controllers
             _context = context;
         }
 
-
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> Users()
         {
             var users = await _context.Users.ToListAsync();

@@ -37,7 +37,7 @@
                                     <li><a class="dropdown-item text-dark" asp-controller="Actor" asp-action="index"><i class="bi bi-film"></i>Actors</a></li>
                                     <li><a class="dropdown-item text-dark" asp-controller="Producer" asp-action="index">Producers</a></li>
                                     <li><a class="dropdown-item text-dark" asp-controller="Cinema" asp-action="index">Cinemas</a></li>
-                                    <li><a class="dropdown-item text-dark">Security</a></li>
+                                    <li><a class="dropdown-item text-dark" asp-controller="Security" asp-action="index">Security</a></li>
 
                                 </ul>
                             </li>
@@ -55,7 +55,7 @@
 
                     @if (!User.Identity.IsAuthenticated)
                     {
-                        <a class="nav-link text-dark" aria-current="page" asp-controller="Account" asp-action="login">
+                        <a class=" navbar-brand text-dark" aria-current="page" asp-controller="Account" asp-action="login">
                             Login
                         </a>
                     }

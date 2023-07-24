@@ -1,9 +1,4 @@
 ﻿
-
-using CinemaBooking.Repositories.ActorRepository;
-using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-
 namespace CinemaBooking.Controllers
 {
     public class ActorController : Controller
@@ -18,12 +13,13 @@ namespace CinemaBooking.Controllers
             _actorRepository = actorRepository;
             _webHostEnvironment = webHostEnvironment;
         }
-
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var actors = await _actorRepository.GetAllAsync();
             return View(actors);
         }
+        [Authorize]
 
         public async Task<IActionResult> Create()
         {
@@ -56,12 +52,15 @@ namespace CinemaBooking.Controllers
         }
 
 
+        [Authorize]
         public async Task<IActionResult> Detail(int id)
         {
             var result = await _actorRepository.GetByIdAsync(id);
             if (result == null) return View("NotFound");
             return View(result);
         }
+        [Authorize]
+
         public async Task<IActionResult> Edit(int id)
         {
             var result = await _actorRepository.GetByIdAsync(id);
@@ -70,7 +69,7 @@ namespace CinemaBooking.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id,[Bind("ID", "FullName", "Bio", "ImageFile")] Actor actor)
+        public async Task<IActionResult> Edit(int id, [Bind("ID", "FullName", "Bio", "ImageFile")] Actor actor)
         {
             if (!ModelState.IsValid)
             {
@@ -92,7 +91,7 @@ namespace CinemaBooking.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _actorRepository.GetByIdAsync(id);
@@ -100,12 +99,12 @@ namespace CinemaBooking.Controllers
             return View(result);
         }
 
-        [HttpPost,ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmation(int id)
         {
             var result = await _actorRepository.GetByIdAsync(id);
             if (result == null) return View("NotFound");
-           
+
 
 
             await _actorRepository.DeleteAsync(id);

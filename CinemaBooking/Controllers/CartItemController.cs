@@ -1,10 +1,4 @@
-﻿using CinemaBooking.Repositories.CartItemRepository;
-using CinemaBooking.Repositories.CartRepository_;
-using CinemaBooking.Repositories.MovieRepository;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-
+﻿
 namespace CinemaBooking.Controllers
 {
     public class CartItemController : Controller
