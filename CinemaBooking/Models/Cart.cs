@@ -12,6 +12,7 @@ namespace CinemaBooking.Models
         public ApplicationUser User { get; set; }
         public List<CartItem> CartItems { get; set; }
         public DateTime CartDate { get; set; }
+        public int Count { get; set; }
 
 
 

@@ -17,15 +17,15 @@
             <tr>
                 <td>@item.Id</td>
                 <td>@item.Name</td>
-                @if (item.Name == "Admin")
+                @if (item.Name == "admin")
                 {
-                    <td><button class="btn btn-danger" disabled>Delete</button></td>
+                    <td><button class="btn btn-danger" disabled>delete</button></td>
                 }
                 else
                 {
-                    <form method="post" asp-action="Delete">
+                    <form method="post" asp-action="Delete" asp-route-roleName=@item.Name>
 
-                    <td><a class="btn btn-danger">Delete</a></td>
+                    <td><button type="submit" class="btn btn-danger">Delete</button></td>
                     </form>
                 }
             </tr>

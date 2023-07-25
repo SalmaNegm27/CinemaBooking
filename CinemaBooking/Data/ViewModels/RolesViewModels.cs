@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CinemaBooking.ViewModels
+namespace CinemaBooking.Data.ViewModels
 {
     public class RolesViewModels
     {

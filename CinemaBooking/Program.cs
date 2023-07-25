@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using CinemaBooking.Repositories.CartItemRepository;
 using CinemaBooking.Repositories.CartRepository_;
+using CinemaBooking.Repositories.CartItemHistory;
 
 namespace CinemaBooking
 {
@@ -26,6 +27,7 @@ namespace CinemaBooking
             builder.Services.AddScoped<IProducerRepository,ProducerRepository>();
             builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
             builder.Services.AddScoped<ICartRepository, CartRepository>();
+            builder.Services.AddScoped<ICartItemHistory, CartItemHistory>();
         
             //builder.Services.AddScoped<CartService>();
             //builder.Services.AddScoped<ApplicationDbInitializer>();

@@ -12,11 +12,7 @@ namespace CinemaBooking.Repositories.CartRepository_
             _dbContext = dbContext;
         }
 
-        public async Task<Cart> GetByUserIdAsync(string userId)
-        {
-            return await _dbContext.Carts
-         .Include(c => c.CartItems)
-         .FirstOrDefaultAsync(c => c.UserId == userId);
-        }
+        public async Task<Cart> GetByUserIdAsync(string userId) => await _dbContext.Carts
+                             .Include(c => c.CartItems).FirstOrDefaultAsync(c => c.UserId == userId);
     }
 }

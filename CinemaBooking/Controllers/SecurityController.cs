@@ -1,7 +1,6 @@
-﻿using CinemaBooking.ViewModels;
-using Microsoft.AspNetCore.Identity;
-using System.Net;
+﻿
 
+using CinemaBooking.Data.ViewModels;
 
 namespace CinemaBooking.Controllers
 {
@@ -56,15 +55,15 @@ namespace CinemaBooking.Controllers
                 return View("Not Found");
             }
 
-            Task<IdentityResult>? result = _roleManager.DeleteAsync(role);
+            var result = await _roleManager.DeleteAsync(role);
 
-            if (result.IsCompletedSuccessfully)
+            if (result.Succeeded)
             {
                 return RedirectToAction("index");
             }
             else
             {
-                return View("Not Found");
+                return View("NotFound");
             }
 
         }
