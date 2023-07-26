@@ -6,6 +6,8 @@ using CinemaBooking.Repositories.ProducerRepository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using CinemaBooking.Repositories.CartItemRepository;
+using CinemaBooking.Repositories.CartRepository_;
+using CinemaBooking.Repositories.CartItemHistoryRepository;
 
 namespace CinemaBooking
 {
@@ -24,12 +26,14 @@ namespace CinemaBooking
             builder.Services.AddScoped<IMovieRepository, MovieRepository>();
             builder.Services.AddScoped<IProducerRepository,ProducerRepository>();
             builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
+            builder.Services.AddScoped<ICartRepository, CartRepository>();
+            builder.Services.AddScoped<ICartItemHistoryRepository, CartItemHistoryRepository>();
         
             //builder.Services.AddScoped<CartService>();
             //builder.Services.AddScoped<ApplicationDbInitializer>();
 
 
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
             builder.Services.AddMemoryCache();
             builder.Services.AddSession();
             builder.Services.AddAuthentication(options =>

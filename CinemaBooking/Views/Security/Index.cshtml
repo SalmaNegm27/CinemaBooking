@@ -1,0 +1,43 @@
+﻿@model IEnumerable<IdentityRole>
+
+@{
+    ViewData["Title"] = "Roles";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Role Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                @if (item.Name == "Admin")
+                {
+                    <td><button class="btn btn-danger" disabled>delete</button></td>
+                }
+                else
+                {
+                    <form method="post" asp-action="Delete" asp-route-roleName=@item.Name>
+
+                    <td><button type="submit" class="btn btn-danger">Delete</button></td>
+                    </form>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Button trigger modal -->
+<div class="d-flex justify-content-center">
+
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Add Role
+    </button>
+</div>
+<partial name="_CreateRole" model="new RolesViewModels()"></partial>

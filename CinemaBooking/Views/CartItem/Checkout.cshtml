@@ -1,0 +1,39 @@
+﻿@{
+    decimal total = 0; // Initialize the total variable
+    foreach (var item in Model)
+    {
+        total += item.Total; // Sum up the total values
+    }
+}
+
+<h2>Checkout</h2>
+
+<p>Confirm your order:</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Movie</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.MovieName</td>
+                <td>@item.Price</td>
+                <td>@item.Amount</td>
+                <td>@item.Total</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>Total: @total</p>
+
+<form method="post" asp-action="Checkout">
+    <button type="submit" class="btn btn-primary">Place Order</button>
+</form>

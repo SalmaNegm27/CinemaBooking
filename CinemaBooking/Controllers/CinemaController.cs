@@ -1,6 +1,4 @@
 ﻿
-using CinemaBooking.Repositories.CinemaRepository;
-
 namespace CinemaBooking.Controllers
 {
     public class CinemaController : Controller
@@ -12,17 +10,20 @@ namespace CinemaBooking.Controllers
             _cinemaRepository = cinemaRepository;
             _webHostEnvironment = webHostEnvironment;
         }
+        [Authorize]
 
         public async Task<IActionResult> Index()
         {
             var cinemas= await _cinemaRepository.GetAllAsync();
             return View(cinemas);
         }
+        [Authorize]
         public async Task<IActionResult> Detail(int id)
         {
             var cinema = await _cinemaRepository.GetByIdAsync(id);
             return View(cinema);
         }
+        [Authorize]
         public async Task<IActionResult> Create()
         {
             return View();
@@ -52,6 +53,7 @@ namespace CinemaBooking.Controllers
             return RedirectToAction("Index");
 
         }
+        [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
             var cinema = await _cinemaRepository.GetByIdAsync(id);
@@ -74,6 +76,7 @@ namespace CinemaBooking.Controllers
             return RedirectToAction("Index");
 
         }
+        [Authorize]
 
         public async Task<IActionResult> Delete(int id)
         {

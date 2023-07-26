@@ -1,5 +1,6 @@
 ﻿
 using CinemaBooking.Repositories.ProducerRepository;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CinemaBooking.Controllers
 {
@@ -15,16 +16,19 @@ namespace CinemaBooking.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
            var producers= await _producerrepository.GetAllAsync();
             return View(producers);
         }
+        [Authorize]
+
         public async Task<IActionResult> Create()
         {
             return View();
         }
-
+       
         [HttpPost]
         public async Task<IActionResult> Create([Bind("FullName","Bio","ImageFile")]Producer producer)
          {
@@ -50,6 +54,7 @@ namespace CinemaBooking.Controllers
 
         }
 
+        [Authorize]
 
         public async Task<IActionResult> Detail(int id)
         {
@@ -58,14 +63,14 @@ namespace CinemaBooking.Controllers
             return View(result);
         }
 
-
+        [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
             var result = await _producerrepository.GetByIdAsync(id);
             if (result == null) return View("Empty");
             return View(result);
         }
-
+     
         [HttpPost]
         public async Task<IActionResult> Edit(int id,[Bind("ID","FullName", "Bio", "ImagePath")] Producer producer)
         {
@@ -81,6 +86,7 @@ namespace CinemaBooking.Controllers
             return RedirectToAction("Index");
 
         }
+        [Authorize]
 
         public async Task<IActionResult> Delete(int id)
         {
@@ -88,7 +94,7 @@ namespace CinemaBooking.Controllers
             if (result == null) return View("NotFound");
             return View(result);
         }
-
+   
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmation(int id)
         {

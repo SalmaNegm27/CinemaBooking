@@ -43,7 +43,7 @@ namespace CinemaBooking.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Actors");
+                    b.ToTable("Actors", (string)null);
                 });
 
             modelBuilder.Entity("CinemaBooking.Models.Actor_Movie", b =>
@@ -138,6 +138,9 @@ namespace CinemaBooking.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
+                    b.Property<DateTime>("CartDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -146,7 +149,7 @@ namespace CinemaBooking.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Carts");
+                    b.ToTable("Carts", (string)null);
                 });
 
             modelBuilder.Entity("CinemaBooking.Models.CartItem", b =>
@@ -182,7 +185,52 @@ namespace CinemaBooking.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("CartItems");
+                    b.ToTable("CartItems", (string)null);
+                });
+
+            modelBuilder.Entity("CinemaBooking.Models.CartItemsHistory", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CheckoutDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MovieName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("MovieId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CartItemsHistories", (string)null);
                 });
 
             modelBuilder.Entity("CinemaBooking.Models.Cinema", b =>
@@ -208,7 +256,7 @@ namespace CinemaBooking.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Cinemas");
+                    b.ToTable("Cinemas", (string)null);
                 });
 
             modelBuilder.Entity("CinemaBooking.Models.Movie", b =>
@@ -256,7 +304,7 @@ namespace CinemaBooking.Migrations
 
                     b.HasIndex("ProducerId");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
                 });
 
             modelBuilder.Entity("CinemaBooking.Models.Producer", b =>
@@ -282,7 +330,7 @@ namespace CinemaBooking.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("producers");
+                    b.ToTable("producers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -463,6 +511,31 @@ namespace CinemaBooking.Migrations
                     b.Navigation("Cart");
 
                     b.Navigation("Movie");
+                });
+
+            modelBuilder.Entity("CinemaBooking.Models.CartItemsHistory", b =>
+                {
+                    b.HasOne("CinemaBooking.Models.Cart", "Cart")
+                        .WithMany()
+                        .HasForeignKey("CartId");
+
+                    b.HasOne("CinemaBooking.Models.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CinemaBooking.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Movie");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CinemaBooking.Models.Movie", b =>

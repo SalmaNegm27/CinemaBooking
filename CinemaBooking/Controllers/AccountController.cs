@@ -1,6 +1,5 @@
 ﻿using CinemaBooking.Data.Const;
 using CinemaBooking.Data.ViewModels;
-using Microsoft.AspNetCore.Identity;
 
 namespace CinemaBooking.Controllers
 {
@@ -17,7 +16,7 @@ namespace CinemaBooking.Controllers
             _context = context;
         }
 
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Users()
         {
             var users = await _context.Users.ToListAsync();
@@ -41,14 +40,14 @@ namespace CinemaBooking.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index","Movie");
+                        return RedirectToAction("Index", "Movie");
                     }
                 }
-                TempData["Error"] = "Wrong credentials. Please, try again!";
+                TempData["Error"] = "Invalid Email or Password. Please, try again!";
                 return View(loginVM);
             }
 
-            TempData["Error"] = "Wrong credentials. Please, try again!";
+            TempData["Error"] = "Invalid Email or Password. Please, try again!";
             return View(loginVM);
         }
 
@@ -75,8 +74,12 @@ namespace CinemaBooking.Controllers
             };
             var newUserResponse = await _userManager.CreateAsync(newUser, registerVM.Password);
 
-            if (newUserResponse.Succeeded)
-                await _userManager.AddToRoleAsync(newUser, UserRole.User);
+            if (!newUserResponse.Succeeded)
+            {
+                TempData["Error"] = "Invalid Password";
+                return View(registerVM);
+            }
+            await _userManager.AddToRoleAsync(newUser, UserRole.User);
 
             return View("RegisterCompleted");
         }
@@ -85,7 +88,7 @@ namespace CinemaBooking.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index","Movie");
+            return RedirectToAction("Index", "Movie");
         }
 
         public IActionResult AccessDenied(string ReturnUrl)

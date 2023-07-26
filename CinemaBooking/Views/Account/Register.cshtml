@@ -43,11 +43,11 @@
                         <input asp-for="ConfirmPassword" class="form-control" />
                         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                     </div>
-                   <p class="text-center"> Already have an Account <a aspp-Controller="Account" asp-action="login">Login Now</a></p>
+                   <p class="text-center"> Already have an Account <a asp-Controller="Account" asp-action="login">Login Now</a></p>
 
                     <div class="form-group d-flex justify-content-center mt-3">
-                        <input class="btn btn-outline-success float-right m-1" type="submit" value="Sign up" />
-                        <a class="btn btn-outline-secondary m-1" asp-controller="Movies" asp-action="Index">Cancel</a>
+                       <input class="btn btn-outline-success float-right m-1" type="submit" value="Sign up" />
+                        <a class="btn btn-outline-secondary m-1" asp-controller="Movie" asp-action="Index">Cancel</a>         
                     </div>
                 </form>
             </div>
