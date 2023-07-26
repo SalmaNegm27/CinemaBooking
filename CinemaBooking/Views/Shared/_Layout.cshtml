@@ -26,13 +26,13 @@
                                 Movies
                             </a>
                         </li>
-                         @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
                         {
-                             <li class="nav-item">
-                            <a class="nav-link text-dark" aria-current="page" asp-controller="CartItemHistory" asp-action="index">
-                                Cart History
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" aria-current="page" asp-controller="CartItemHistory" asp-action="index">
+                                    Cart History
+                                </a>
+                            </li>
                         }
 
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
@@ -71,8 +71,11 @@
                     }
 
 
-                 @Html.Partial("_CartItemCount")
+                    @*  @Html.Partial("_CartItemCount")*@
 
+                    <div>
+                        @await Component.InvokeAsync("CartIcon")
+                    </div>
 
 
                     @if (User.Identity.IsAuthenticated)

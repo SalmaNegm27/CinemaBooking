@@ -15,7 +15,7 @@ namespace CinemaBooking.Models
         public List<CartItemsHistory> CartItemsHistories { get; set; }
         public DateTime CartDate { get; set; }
 
-        public int CartItemCount => CartItems?.Count ?? 0;
+        //public int CartItemCount => CartItems?.Count ?? 0;
         //public int Count { get; set; }
 
 

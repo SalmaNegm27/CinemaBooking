@@ -128,4 +128,12 @@
         });
     });
 
+    $.ajax({
+        url: '@Url.Action("AddItem", "CartItem")',
+        type: 'POST',
+        data: { movieId: movieId },
+        success: function (result) {
+            $('.badge').text(result.cartItemCount);
+        }
+    });
 </script>

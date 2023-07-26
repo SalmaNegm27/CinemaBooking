@@ -200,20 +200,36 @@ namespace CinemaBooking.Controllers
         //    return View();
         //}
 
-        public IActionResult GetCartCount(int cartId)
-        {
-            var cart = _cartRepository.GetByIdAsync(cartId);
-            int cartItemCount = GetCartItemCount(cart.Id);
-            return Json(new { Count = cartItemCount });
-        }
-        private int GetCartItemCount(int cartId)
-        {
-            return _cartRepository.CountCart(cartId);
-        }
+        //public IActionResult GetCartCount(int cartId)
+        //{
+        //    var cart = _cartRepository.GetByIdAsync(cartId);
+        //    int cartItemCount = GetCartItemCount(cart.Id);
+        //    return Json(new { Count = cartItemCount });
+        //}
+        //private int GetCartItemCount(int cartId)
+        //{
+        //    return _cartRepository.CountCart(cartId);
+        //}
 
-       
 
-      
+        //public async Task<int> GetCartItemCount()
+        //{
+        //    var user = await _userManager.GetUserAsync(User);
+        //    if (user == null)
+        //    {
+        //        return 0;
+        //    }
+
+        //    var cart = await _cartRepository.GetByUserIdAsync(user.Id);
+        //    if (cart == null || cart.CartItems == null)
+        //    {
+        //        return 0;
+        //    }
+
+        //    return cart.CartItems.Count;
+        //}
+
+
 
     }
 }

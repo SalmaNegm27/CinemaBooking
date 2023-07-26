@@ -1,8 +1,11 @@
 ﻿@*@{
     var cartId = GetCurrentCartId();
 }*@
+@{
+    //var itemCount = await Html.Action("GetCartItemCount", "CartItem");
+}
 
-@if ( !User.IsInRole("Admin"))
+@if (!User.IsInRole("Admin"))
 {
     <a id="cartLink" class="m-1 position-relative" asp-controller="CartItem" asp-action="Index">
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
@@ -11,33 +14,29 @@
         @if (User.Identity.IsAuthenticated)
         {
             <span id="cartItemCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                0 <span class="visually-hidden">unread messages</span>
+                0<span class="visually-hidden">items in cart</span>
             </span>
         }
     </a>
 
+
 }
-
-@*<script>
-
+<script>
     function updateCartItemCount() {
         $.ajax({
-            url: '@Url.Action("GetCartCount", "CartItem")',
-            data: { cartId: @cartId },
-            success: function(data) {
-                var cartItemCount = data.Count;
-                if (cartItemCount > 0) {
-                    $('#cartItemCount').text(cartItemCount);
-                    $('#cartItemCount').show();
-                } else {
-                    $('#cartItemCount').hide();
-                }
+            url: '@Url.Action("GetCartItemCount", "CartItem")',
+            type: 'GET',
+            success: function (data) {
+                $('#cartItemCount').text(data);
+            },
+            error: function (error) {
+                console.log(error);
             }
         });
     }
 
-    updateCartItemCount();
-
-
-    setInterval(updateCartItemCount, 30000);
-</script>*@
+    // Call the function once on page load
+    $(document).ready(function () {
+        updateCartItemCount();
+    });
+</script>

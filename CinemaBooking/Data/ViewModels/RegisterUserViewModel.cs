@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
 namespace CinemaBooking.Data.ViewModels
@@ -26,6 +27,7 @@ namespace CinemaBooking.Data.ViewModels
         public string ConfirmPassword { get; set; }
 
         [Required(ErrorMessage ="Any User Must be Assigned to Role")]
-        public string Role { get; set; }
+        public List<SelectListItem> RolesList { get; set; }
+        public string  SelectedRole { get; set; }
     }
 }
