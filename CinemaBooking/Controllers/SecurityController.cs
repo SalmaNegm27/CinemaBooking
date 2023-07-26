@@ -30,6 +30,16 @@ namespace CinemaBooking.Controllers
             }
             return View(model);
         }
+
+      
+       
+
+        //public ActionResult GetRoles()
+        //{
+        //    var usersWithRoles = _roleManager.GetRoleNameAsync()
+        //                          ;
+        //    return View(usersWithRoles);
+        //}
         //public async Task<IActionResult> Delete(string roleName)
         //{
         //    var role = await _roleManager.FindByIdAsync(roleName);

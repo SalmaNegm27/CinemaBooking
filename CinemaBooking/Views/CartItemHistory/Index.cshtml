@@ -1,0 +1,39 @@
+﻿@model List<CartItemsHistory>
+
+<style>
+    h4{
+    size:15px;
+    padding:20px;
+    margin:10px;
+    background-color:#9a8c98;
+    }
+</style>
+<h2>Shopping Cart</h2>
+
+@foreach (var group in Model.GroupBy(item => item.CheckoutDate.Date.ToString("dd MMM yyyy")))
+{
+    <h4 class="text-capitaliz">Day:@group.Key</h4>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Movie</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in group)
+            {
+                <tr>
+
+                    <td>@item.MovieName</td>
+                    <td>@item.Price</td>
+                    <td>@item.Amount</td>
+                    <td>@item.Total</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

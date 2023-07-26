@@ -4,6 +4,7 @@ using CinemaBooking.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CinemaBooking.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230726060726_removeCartCount")]
+    partial class removeCartCount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,7 +45,7 @@ namespace CinemaBooking.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Actors", (string)null);
+                    b.ToTable("Actors");
                 });
 
             modelBuilder.Entity("CinemaBooking.Models.Actor_Movie", b =>
@@ -149,7 +151,7 @@ namespace CinemaBooking.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Carts", (string)null);
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("CinemaBooking.Models.CartItem", b =>
@@ -185,7 +187,7 @@ namespace CinemaBooking.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("CartItems", (string)null);
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("CinemaBooking.Models.CartItemsHistory", b =>
@@ -230,7 +232,7 @@ namespace CinemaBooking.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CartItemsHistories", (string)null);
+                    b.ToTable("CartItemsHistories");
                 });
 
             modelBuilder.Entity("CinemaBooking.Models.Cinema", b =>
@@ -256,7 +258,7 @@ namespace CinemaBooking.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Cinemas", (string)null);
+                    b.ToTable("Cinemas");
                 });
 
             modelBuilder.Entity("CinemaBooking.Models.Movie", b =>
@@ -304,7 +306,7 @@ namespace CinemaBooking.Migrations
 
                     b.HasIndex("ProducerId");
 
-                    b.ToTable("Movies", (string)null);
+                    b.ToTable("Movies");
                 });
 
             modelBuilder.Entity("CinemaBooking.Models.Producer", b =>
@@ -330,7 +332,7 @@ namespace CinemaBooking.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("producers", (string)null);
+                    b.ToTable("producers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

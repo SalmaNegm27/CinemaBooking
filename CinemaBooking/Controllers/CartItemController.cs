@@ -1,5 +1,4 @@
-﻿
-using CinemaBooking.Repositories.CartItemHistory;
+﻿using CinemaBooking.Repositories.CartItemHistoryRepository;
 
 namespace CinemaBooking.Controllers
 {
@@ -9,13 +8,13 @@ namespace CinemaBooking.Controllers
         protected readonly IMovieRepository _movieRepository;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ICartRepository _cartRepository;
-        private readonly ICartItemHistory _cartItemHistory;
-        public CartItemController(ICartItemRepository cartItemRepository, IMovieRepository movieRepository,UserManager<ApplicationUser> userManager, ICartRepository cartRepository,ICartItemHistory cartItemHistory)
+        private readonly ICartItemHistoryRepository _cartItemHistory;
+        public CartItemController(ICartItemRepository cartItemRepository, IMovieRepository movieRepository, UserManager<ApplicationUser> userManager, ICartRepository cartRepository, ICartItemHistoryRepository cartItemHistory)
         {
             _cartItemRepository = cartItemRepository;
             _movieRepository = movieRepository;
             _userManager = userManager;
-            _cartRepository = cartRepository; 
+            _cartRepository = cartRepository;
             _cartItemHistory = cartItemHistory;
         }
 
@@ -24,21 +23,21 @@ namespace CinemaBooking.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                
+
                 return RedirectToAction("Login", "Account");
             }
 
             var cart = await _cartRepository.GetByUserIdAsync(user.Id);
             if (cart == null || cart.CartItems == null || cart.CartItems.Count == 0)
             {
-                
+
                 return View("CartIsEmpty");
             }
 
             return View(cart.CartItems);
         }
         public async Task<IActionResult> AddItem() => View();
-       
+
         #region AddItemv1
         //[HttpPost]
         //public async Task<ActionResult> AddItem(int movieId)
@@ -69,9 +68,9 @@ namespace CinemaBooking.Controllers
                     UserId = userId,
                     CartDate = DateTime.Now,
                     CartItems = new List<CartItem>(),
-                    Count = 1
+
                 };
-                cart.Count++;
+
                 await _cartRepository.AddAsync(cart);
             }
             return cart;
@@ -81,27 +80,28 @@ namespace CinemaBooking.Controllers
         {
             var movie = await _movieRepository.GetByIdAsync(movieId);
             var user = await _userManager.GetUserAsync(User);
-           
-            if ( user == null || !await _userManager.IsInRoleAsync(user, "User"))
+
+            if (user == null || !await _userManager.IsInRoleAsync(user, "User"))
             {
-               
+
                 return RedirectToAction("Login", "Account");
             }
             else
             {
-            var cart = await GetOrCreateCart(user.Id);
-            var cartItem = new CartItem
-            {
-                MovieId = movie.Id,
-                MovieName = movie.Name,
-                Price = movie.Price,
-                Amount = 1,
-                Total = _cartItemRepository.CalculateTotal(1, movie.Price),
-                CartId = cart.ID
-            };
+                var cart = await GetOrCreateCart(user.Id);
+                var cartItem = new CartItem
+                {
+                    MovieId = movie.Id,
+                    MovieName = movie.Name,
+                    Price = movie.Price,
+                    Amount = 1,
+                    Total = _cartItemRepository.CalculateTotal(1, movie.Price),
+                    CartId = cart.ID,
+                    
+                };
 
-            await _cartItemRepository.AddAsync(cartItem);
-            return RedirectToAction("Index");
+                await _cartItemRepository.AddAsync(cartItem);
+                return RedirectToAction("Index");
 
             }
         }
@@ -152,14 +152,14 @@ namespace CinemaBooking.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                
+
                 return RedirectToAction("Login", "Account");
             }
 
             var cart = await _cartRepository.GetByUserIdAsync(user.Id);
             if (cart == null || cart.CartItems.Count == 0)
             {
-               
+
                 return RedirectToAction("CartIsEmpty");
             }
 
@@ -180,20 +180,40 @@ namespace CinemaBooking.Controllers
                 Price = item.Price,
                 Amount = item.Amount,
                 Total = item.Total,
-                CheckoutDate = DateTime.Now
+                CheckoutDate = DateTime.Now,
+                CartId = cart.ID,
+              
+
             }).ToList();
 
-          
+
             await _cartItemHistory.AddAllAsync(cartItems);
             await _cartItemRepository.DeleteAllAsync(cart.CartItems);
         }
+
+
+        //public ActionResult GetCount(int cartId)
+        //{
+        //    var cart = _cartRepository.GetByIdAsync(cartId);
+        //    int cartItemCount = GetCartItemCount(cart.Id);
+        //    ViewBag.CartItemCount = cartItemCount;
+        //    return View();
+        //}
+
+        public IActionResult GetCartCount(int cartId)
+        {
+            var cart = _cartRepository.GetByIdAsync(cartId);
+            int cartItemCount = GetCartItemCount(cart.Id);
+            return Json(new { Count = cartItemCount });
+        }
+        private int GetCartItemCount(int cartId)
+        {
+            return _cartRepository.CountCart(cartId);
+        }
+
        
 
-
-
-
-
-
+      
 
     }
 }
