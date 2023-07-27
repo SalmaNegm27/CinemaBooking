@@ -112,7 +112,7 @@ namespace CinemaBooking.Data.Seeds
                             StartDate = DateTime.Now.AddDays(-10),
                             EndDate = DateTime.Now.AddDays(10),
                             CinemaId = 1,
-                            ProducerId = 1,
+                            ProducerId = 2,
                             MovieCategory = Enums.MovieCategory.Action
 
                         },

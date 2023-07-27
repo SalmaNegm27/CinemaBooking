@@ -191,6 +191,7 @@ namespace CinemaBooking.Controllers
             await _cartItemRepository.DeleteAllAsync(cart.CartItems);
         }
 
+        #region CartCount
 
         //public ActionResult GetCount(int cartId)
         //{
@@ -227,7 +228,8 @@ namespace CinemaBooking.Controllers
         //    }
 
         //    return cart.CartItems.Count;
-        //}
+        //} 
+        #endregion
 
 
 

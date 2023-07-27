@@ -17,9 +17,14 @@ namespace CinemaBooking.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string stringSearch)
         {
-           var producers= await _producerrepository.GetAllAsync();
+            IEnumerable<Producer>? producers = await _producerrepository.GetAllAsync();
+            ViewData["CurrentFilter"] = stringSearch;
+            if (!string.IsNullOrEmpty(stringSearch))
+            {
+                producers = producers.Where(m => m.FullName.IndexOf(stringSearch, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+            }
             return View(producers);
         }
         [Authorize]

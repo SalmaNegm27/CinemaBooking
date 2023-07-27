@@ -26,8 +26,9 @@ namespace CinemaBooking.Data.ViewModels
         [Compare("Password", ErrorMessage = "Passwords do not match")]
         public string ConfirmPassword { get; set; }
 
-        [Required(ErrorMessage ="Any User Must be Assigned to Role")]
-        public List<SelectListItem> RolesList { get; set; }
+        //[Required(ErrorMessage ="Any User Must be Assigned to Role")]
+        public List<SelectListItem>? RolesList { get; set; }
+        [Required]
         public string  SelectedRole { get; set; }
     }
 }

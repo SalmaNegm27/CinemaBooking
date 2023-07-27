@@ -54,7 +54,8 @@
                     <div class="col-md-12">
                         <div class="card-footer ">
                             <p class="card-text">
-
+                                @if(!User.IsInRole("Admin"))
+                                {
                                 <form method="post" asp-controller="CartItem" asp-action="AddItem" class="d-inline">
                                     <input type="hidden" name="movieId" value="@item.Id" />
                                     <button type="submit" class="btn text-white @((DateTime.Now > item.EndDate) ? "disabled" : "")"
@@ -62,6 +63,8 @@
                                         <i class="bi bi-cart-plus"></i> Add to Cart (Price @item.Price.ToString("c"))
                                     </button>
                                 </form>
+                                    
+                                }
                                 <div class="d-flex justify-content-between mt-2">
                                     <a class="btn  float-right" asp-action="Details" asp-route-id="@item.Id" style="color: #A076F9">
                                         Show Details

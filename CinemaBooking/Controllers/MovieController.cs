@@ -1,7 +1,4 @@
-﻿using CinemaBooking.Repositories.CartItemRepository;
-using CinemaBooking.Repositories.MovieRepository;
-
-namespace CinemaBooking.Controllers
+﻿namespace CinemaBooking.Controllers
 {
     public class MovieController : Controller
     {
@@ -15,17 +12,10 @@ namespace CinemaBooking.Controllers
             _cartItemRepository = cartItemRepository;
 
         }
-
-        //public async Task<IActionResult> Index()
-        //{
-        //  var movies = await _movieRepository.GetAllAsync();
-        //    return View(movies);
-        //}
-
         public async Task<IActionResult> Index(string stringSearch)
         {
+            IEnumerable<Movie>? movies = await _movieRepository.GetAllAsync();
             ViewData["CurrentFilter"] = stringSearch;
-            var movies = await _movieRepository.GetAllAsync();
             if (!string.IsNullOrEmpty(stringSearch))
             {
                 movies = movies.Where(m => m.Name.IndexOf(stringSearch, StringComparison.OrdinalIgnoreCase) >= 0).ToList();

@@ -34,12 +34,14 @@ namespace CinemaBooking.Controllers
             }
             return View(model);
         }
+        #region getAllRoles
         //public ActionResult GetAllRoles()
         //{
         //    string[] roles = _roleManager.Roles.Select(r => r.Name).ToArray();
         //    return View(roles);
         //}
 
+        #endregion
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Delete")]
@@ -64,7 +66,6 @@ namespace CinemaBooking.Controllers
             }
 
         }
-
         public IActionResult AddUser()
         {
             var allRoles = _roleManager.Roles.Select(r => r.Name).ToList();
@@ -76,23 +77,27 @@ namespace CinemaBooking.Controllers
 
             return View(viewModel);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddUser(RegisterUserViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.FullName, Email = model.EmailAddress };
+                var user = new ApplicationUser
+                {
+                    UserName = model.EmailAddress,
+                    FullName = model.FullName,
+                    Email = model.EmailAddress
+                };
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
-                   
+
                     await _userManager.AddToRoleAsync(user, model.SelectedRole);
 
-                   
-                    return View("NotFound");
+
+                    return RedirectToAction("GetAllUsers");
                 }
 
                 foreach (var error in result.Errors)
@@ -101,10 +106,60 @@ namespace CinemaBooking.Controllers
                 }
             }
 
-                 model.RolesList = _roleManager.Roles.Select(role => new SelectListItem { Value = role.Name, Text = role.Name }).ToList();
+            model.RolesList = _roleManager.Roles.Select(role => new SelectListItem { Value = role.Name, Text = role.Name }).ToList();
             return View(model);
         }
 
+        public async Task<IActionResult> GetAllUsers()
+        {
+            //var roles = await _roleManager.Roles.ToListAsync();
+            //List<ApplicationUser>? users = await  _userManager.Users.ToListAsync();
+            List<ApplicationUser>? users = await _userManager.Users.ToListAsync();
+            List<UserWithRolesViewModel>? usersWithRoles = new List<UserWithRolesViewModel>();
 
+            foreach (var user in users)
+            {
+                IList<string>? userRoles = await _userManager.GetRolesAsync(user);
+                List<string>? roleNames = await _roleManager.Roles
+                                                .Where(role => userRoles.Contains(role.Name))
+                                                .Select(role => role.Name)
+                                                 .ToListAsync();
+                var userWithRoles = new UserWithRolesViewModel
+                {
+                    Id = user.Id,
+                    FullName = user.FullName,
+                    Email = user.Email,
+                    Roles = roleNames
+                };
+                usersWithRoles.Add(userWithRoles);
+            }
+
+            return View(usersWithRoles);
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                return View("Not Found");
+            }
+
+            var result = await _userManager.DeleteAsync(user);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("GetAllUsers");
+            }
+            else
+            {
+                return View("NotFound");
+            }
+
+        }
     }
 }
