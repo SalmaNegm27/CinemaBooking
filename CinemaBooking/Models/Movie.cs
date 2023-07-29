@@ -10,6 +10,7 @@ namespace CinemaBooking.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Name of the Movie is Required")]
+        
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Please select file.")]

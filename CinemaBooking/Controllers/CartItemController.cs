@@ -17,7 +17,6 @@ namespace CinemaBooking.Controllers
             _cartRepository = cartRepository;
             _cartItemHistory = cartItemHistory;
         }
-
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -86,6 +85,11 @@ namespace CinemaBooking.Controllers
 
                 return RedirectToAction("Login", "Account");
             }
+            else if (await IsMovieExistInCart(user.Id, movie.Name))
+            {
+                TempData["AlertMessage"] = "The Movie Is Already Exist In The Cart....";
+                return RedirectToAction("Index","Movie");
+            }
             else
             {
                 var cart = await GetOrCreateCart(user.Id);
@@ -97,7 +101,7 @@ namespace CinemaBooking.Controllers
                     Amount = 1,
                     Total = _cartItemRepository.CalculateTotal(1, movie.Price),
                     CartId = cart.ID,
-                    
+
                 };
 
                 await _cartItemRepository.AddAsync(cartItem);
@@ -105,8 +109,6 @@ namespace CinemaBooking.Controllers
 
             }
         }
-
-
         [HttpPost]
         public async Task<IActionResult> RemoveFromCart(int cartItemId)
         {
@@ -168,8 +170,6 @@ namespace CinemaBooking.Controllers
 
             return View("Sucess");
         }
-
-
         private async Task MoveCartItemsToHistory(Cart cart)
         {
             var cartItems = cart.CartItems.Select(item => new CartItemsHistory
@@ -182,7 +182,7 @@ namespace CinemaBooking.Controllers
                 Total = item.Total,
                 CheckoutDate = DateTime.Now,
                 CartId = cart.ID,
-              
+
 
             }).ToList();
 
@@ -190,7 +190,6 @@ namespace CinemaBooking.Controllers
             await _cartItemHistory.AddAllAsync(cartItems);
             await _cartItemRepository.DeleteAllAsync(cart.CartItems);
         }
-
         #region CartCount
 
         //public ActionResult GetCount(int cartId)
@@ -231,6 +230,17 @@ namespace CinemaBooking.Controllers
         //} 
         #endregion
 
+        public async Task<bool> IsMovieExistInCart(string userId,string movieName)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null) return false;
+
+            var cart = await _cartRepository.GetByUserIdAsync(user.Id);
+            if (cart == null) return false;
+
+            return  cart.CartItems.Any(CartItem => CartItem.MovieName.Equals(movieName, StringComparison.OrdinalIgnoreCase));
+
+        }
 
 
     }
