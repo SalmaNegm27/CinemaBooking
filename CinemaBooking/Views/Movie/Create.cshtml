@@ -1,54 +1,107 @@
-﻿
-@model Movie
-
+﻿@model Movie
+@using CinemaBooking.Data;
+@using CinemaBooking.Enums
+@using CinemaBooking.Data.ViewModels;
 
 @{
-    ViewData["Title"] = "Adding Producer";
+    ViewData["Title"] = "Adding a new Movie";
 }
-<div class="container">
-    <div class="card">
-        <div class="card-body">
-            <form asp-action="Create" class="row g-3" enctype="multipart/form-data">
-                <div asp-validation-summary="ModelOnly" class="text-danger">
-                </div>
-                   <div class="form-group col-md-12">
-                        <label asp-for="Name" for="validationCustom01" class="form-label">Name</label>
-                        <input asp-for="Name" type="text" class="form-control" id="validationCustom01" value="">
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
-                    <div class="form-group col-md-12">
-                        <label asp-for="Description" for="validationCustom02" class="control-label">Bio</label>
-                        <input asp-for="Description" type="text" class="form-control" id="validationCustom02" value="">
-                        <span asp-validation-for="Description" class="text-danger"></span>
-                    </div>
-                    <div class="form-group col-md-12">
-                        <label asp-for="ImagePath" for="validationCustom02" class="control-label">Actor Image</label>
-                        <input asp-for="ImagePath" accept="image/*">
-                        <span asp-validation-for="ImagePath" class="text-danger"></span>
-                    </div>
-                    <div class="form-group col-md-12">
-                        <label asp-for="Price" for="validationCustom02" class="control-label">Actor Image</label>
-                        <input asp-for="Price" type="number">
-                        <span asp-validation-for="Price" class="text-danger"></span>
-                    </div>
-                     <div class="form-group col-md-12">
-                        <label asp-for="StartDate" for="validationCustom02" class="control-label">Actor Image</label>
-                        <input asp-for="StartDate" accept="image/*">
-                        <span asp-validation-for="StartDate" class="text-danger"></span>
-                    </div>
 
-                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                    <div>
-                        <img id="output" width="200"/>
-                    </div>
 
-                    <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-outline-success float-right" />
-                        <a class="btn btn-outline-secondary" asp-action="Index">Show All</a>
-                    </div>
-            </form>
-        </div>
+<form asp-action="Create" class="row g-3" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger">
     </div>
-</div>
+    <div class="form-group col-md-12">
+        <label asp-for="Name" for="validationCustom01" class="form-label fw-bold">Name :</label>
+        <input asp-for="Name" type="text" class="form-control" id="validationCustom01" value="">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md-12">
+        <label asp-for="Description" for="validationCustom02" class="control-label fw-bold">Description :</label>
+        <input asp-for="Description" type="text" class="form-control" id="validationCustom02" value="">
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md-12">
+        <label asp-for="Price" for="validationCustom02" class="control-label fw-bold">Price :</label>
+        <input asp-for="Price" type="number" class="form-control" id="validationCustom02" value="">
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="form-group col-md-12">
+        <label asp-for="StartDate" for="validationCustom02" class="control-label fw-bold">StartDate :</label>
+        <input asp-for="StartDate" type="date" class="form-control" id="validationCustom02" value="">
+        <span asp-validation-for="StartDate" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md-12">
+        <label asp-for="EndDate" for="validationCustom02" class="control-label fw-bold">EndDate :</label>
+        <input asp-for="EndDate" type="date" class="form-control" id="validationCustom02" value="">
+        <span asp-validation-for="EndDate" class="text-danger"></span>
+    </div>
+    @*    <div class="form-group col-md-12">
+    <label asp-for="MovieCategory" for="validationCustom02" class="control-label">MovieCategoy</label>
+    <input asp-for="MovieCategory" type="text" class="form-control" id="validationCustom02" value="">
+    <span asp-validation-for="MovieCategory" class="text-danger"></span>
+    </div>*@
+
+    <label for="validationCustom02" class="control-label fw-bold">MovieCategoy :</label>
+
+    @Html.DropDownList("Categories",Html.GetEnumSelectList<MovieCategory>(),"Selected Category",new {@class = "form-control"})
+
+    <div class="form-group col-md-12">
+        <label asp-for="ImageFile" for="validationCustom02" class="control-label fw-bold">Movie Image</label>
+        <input asp-for="ImageFile" accept="image/*">
+        <span asp-validation-for="ImageFile" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md-12">
+        <label asp-for="CinemaId" for="validationCustom02" class="control-label fw-bold">CinemaId</label>
+        <input asp-for="CinemaId" accept="image/*">
+        <span asp-validation-for="CinemaId" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md-12">
+        <label asp-for="ProducerId" for="validationCustom02" class="control-label fw-bold">Movie Image</label>
+        <input asp-for="ProducerId" accept="image/*">
+        <span asp-validation-for="ProducerId" class="text-danger"></span>
+    </div>
+@*
+     <div class="form-group">
+        <label for="SelectedCinemaId">Select Cinema:</label>
+        @Html.DropDownListFor(m => m.SelectedCinemaId, new SelectList(Model.Cinemas, "Name"), "-- Select Cinema --", new { @class = "form-control" })
+    </div>
+*@
+    @*<div class="form-group">
+    <label for="SelectedRole">Select Role:</label>
+    @Html.DropDownListFor(m => m.Cinema, new SelectList(Model.Cinema, "Id", "Name"), "-- Select Cinema --", new { @class = "form-control" })
+    </div>*@
+
+    @*<div class="form-group">
+    <label for="SelectedRole">Select Role:</label>
+    @Html.DropDownListFor(m => m.Producer.FullName, "-- Select Role --", new { @class = "form-control" })
+    </div>*@
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <div>
+        <img id="output" width="200" />
+    </div>
+
+    <div class="form-group d-flex justify-content-center">
+        <input type="submit" value="Create" class="btn btn-outline-success" />
+
+    </div>
+</form>
+<script>
+    function handleFileUpload(event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            $('#output').attr('src', e.target.result);
+            $('#output').show();
+        }
+
+        reader.readAsDataURL(file);
+    }
+
+    $('#file').on('change', handleFileUpload);
+</script>
 
 

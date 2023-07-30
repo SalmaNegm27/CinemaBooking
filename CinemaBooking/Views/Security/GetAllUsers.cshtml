@@ -20,12 +20,10 @@
                 <td>@item.FullName</td>
                 <td>@item.Email</td>
                 <td>@string.Join(", ", item.Roles)</td>
-                <form method="post" asp-action="DeleteUser"asp-route-Id=@item.Id>
+                <form method="post" asp-action="DeleteUser" asp-route-Id=@item.Id>
 
                 <td><button type="submit" class="btn btn-danger">Delete</button></td>
                 </form>
-
-
             </tr>
         }
     </tbody>
@@ -33,5 +31,9 @@
 
 <!-- Button trigger modal -->
 <div class="d-flex justify-content-center">
-    <button asp-action="AddUser" type="button" class="btn btn-success">Add User </button>
+ @*   <form method="post" asp-action="AddUser" >*@
+
+        <a asp-controller="Security" asp-action="adduser" type="submit" class="btn btn-success">Add User</a>
+   @* </form>*@
+
 </div>

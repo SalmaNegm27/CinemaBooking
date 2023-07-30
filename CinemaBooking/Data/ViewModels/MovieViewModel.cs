@@ -3,15 +3,12 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CinemaBooking.Models
+namespace CinemaBooking.Data.ViewModels
 {
-    public class Movie
+    public class MovieViewModel
     {
-        [Key]
         public int Id { get; set; }
-
         [Required(ErrorMessage = "Name of the Movie is Required")]
-
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Please select file.")]
@@ -34,25 +31,17 @@ namespace CinemaBooking.Models
         [Required(ErrorMessage = "Price is Required")]
 
         public decimal Price { get; set; }
+
         [Required]
         public MovieCategory MovieCategory { get; set; }
-
-        [ForeignKey("Cinema")]
-        public int CinemaId { get; set; }
-        public Cinema Cinema { get; set; }
-
-        [ForeignKey("Producer")]
-        public int ProducerId { get; set; }
-        public Producer Producer { get; set; }
-
-
         [NotMapped]
         [DisplayName("Upload File")]
         public IFormFile? ImageFile { get; set; }
-        public List<Actor_Movie> Actor_Movies { get; set; } = new List<Actor_Movie>();
 
-        public List<CartItem> CartItems { get; set; } = new List<CartItem>();
-
-
+        public int SelectedCinemaId { get; set; }
+        public List<CinemaViewModel> Cinemas { get; set; }
     }
 }
+
+
+

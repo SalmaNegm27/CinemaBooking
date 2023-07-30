@@ -22,6 +22,7 @@ namespace CinemaBooking.Controllers
             var roles = await _roleManager.Roles.ToListAsync();
             return View(roles);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(RolesViewModels model)
@@ -34,6 +35,7 @@ namespace CinemaBooking.Controllers
             }
             return View(model);
         }
+
         #region getAllRoles
         //public ActionResult GetAllRoles()
         //{
@@ -42,6 +44,7 @@ namespace CinemaBooking.Controllers
         //}
 
         #endregion
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Delete")]
@@ -66,6 +69,7 @@ namespace CinemaBooking.Controllers
             }
 
         }
+
         public IActionResult AddUser()
         {
             var allRoles = _roleManager.Roles.Select(r => r.Name).ToList();
@@ -109,6 +113,7 @@ namespace CinemaBooking.Controllers
             model.RolesList = _roleManager.Roles.Select(role => new SelectListItem { Value = role.Name, Text = role.Name }).ToList();
             return View(model);
         }
+
 
         public async Task<IActionResult> GetAllUsers()
         {
