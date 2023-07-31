@@ -58,28 +58,47 @@ namespace CinemaBooking.Controllers
 
         public async Task<IActionResult> Create()
         {
-            return View();
+            var viewModel = new MovieViewModel();
+            var cinemas = _dbContext.Cinemas.ToList();
+            var producers = _dbContext.producers.ToList();
+            viewModel.Cinemas = cinemas.Select(c => new CinemaViewModel { Id = c.ID, Name = c.Name }).ToList();
+            viewModel.Producers = producers.Select(c => new ProducerViewModel { Id = c.ID, Name = c.FullName }).ToList();
+
+            return View(viewModel);
         }
         [HttpPost]
-        public async Task<ActionResult> Create(MovieViewModel movie)
+        public async Task<ActionResult> Create([Bind("Name", "Description", "StartDate", "EndDate","ImageFile","Price","MovieCategory", "SelectedCinemaId", "SelectedProducerId")] MovieViewModel movieViewModel)
         {
             if (!ModelState.IsValid)
-            {
-                
+             {
+
                 return View();
             }
             string wwwRootPath = _webHostEnvironment.WebRootPath;
-            string fileName = Path.GetFileNameWithoutExtension(movie.ImageFile.FileName);
-            string extension = Path.GetExtension(movie.ImageFile.FileName);
-            movie.ImagePath = fileName = fileName + DateTime.Now.ToString("yymmssff") + extension;
+            string fileName = Path.GetFileNameWithoutExtension(movieViewModel.ImageFile.FileName);
+            string extension = Path.GetExtension(movieViewModel.ImageFile.FileName);
+            movieViewModel.ImagePath = fileName = fileName + DateTime.Now.ToString("yymmssff") + extension;
             string path = Path.Combine(wwwRootPath + "/Images/", fileName);
             using (var fileStream = new FileStream(path, FileMode.Create))
             {
-                await movie.ImageFile.CopyToAsync(fileStream);
+                await movieViewModel.ImageFile.CopyToAsync(fileStream);
             }
+            var movie = new Movie
+            {
+                Id = movieViewModel.Id,
+                Name = movieViewModel.Name,
+                StartDate = movieViewModel.StartDate,
+                EndDate = movieViewModel.EndDate,
+                ImageFile = movieViewModel.ImageFile,
+                ImagePath = movieViewModel.ImagePath,
+                Price = movieViewModel.Price,
+                MovieCategory = movieViewModel.MovieCategory,
+                CinemaId = movieViewModel.SelectedCinemaId, 
+                ProducerId = movieViewModel.SelectedProducerId,
+                Description = movieViewModel.Description,   
+            };
 
-
-            //await _movieRepository.AddAsync(movie);
+            await _movieRepository.AddAsync(movie);
 
 
             return RedirectToAction("Index");

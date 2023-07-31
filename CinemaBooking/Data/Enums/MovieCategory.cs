@@ -2,12 +2,12 @@
 {
     public enum MovieCategory
     {
-        Drama,
-        Action,
-        Romance,
-        Horror,
-        Comedy,
-        Adventure
+        Drama =0,
+        Action =1,
+        Romance= 2,
+        Horror=3,
+        Comedy=4,
+        Adventure=5
 
     }
 }

@@ -10,10 +10,7 @@ namespace CinemaBooking.Data.ViewModels
         public int Id { get; set; }
         [Required(ErrorMessage = "Name of the Movie is Required")]
         public string Name { get; set; }
-
-        [Required(ErrorMessage = "Please select file.")]
-        [RegularExpression(@"([a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.jpeg)$", ErrorMessage = "Only Image files allowed and should be 5MB or lower.")]
-        public string ImagePath { get; set; }
+        public string? ImagePath { get; set; }
 
         [Required(ErrorMessage = "Description is Required")]
         [StringLength(100, MinimumLength = 10)]
@@ -38,8 +35,13 @@ namespace CinemaBooking.Data.ViewModels
         [DisplayName("Upload File")]
         public IFormFile? ImageFile { get; set; }
 
+        [Required(ErrorMessage = "Choose Cinema")]
         public int SelectedCinemaId { get; set; }
-        public List<CinemaViewModel> Cinemas { get; set; }
+        public List<CinemaViewModel> Cinemas { get; set; } = new List<CinemaViewModel>();
+        [Required(ErrorMessage = "Choose Producer")]
+
+        public int SelectedProducerId { get; set; }
+        public List<ProducerViewModel> Producers { get; set; } = new List<ProducerViewModel>();
     }
 }
 
