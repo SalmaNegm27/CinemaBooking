@@ -85,14 +85,13 @@ namespace CinemaBooking.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddUser(RegisterUserViewModel model)
         {
-            //var user = await _userManager.FindByEmailAsync(model.EmailAddress);
-            //if (user != null)
+            var userEmail = await _userManager.FindByEmailAsync(model.EmailAddress);
+            //if (userEmail != null)
             //{
-            //    TempData["Error"] = "This email address is already in use";
-            //    return View(registerVM);
+            //    return View(model);
             //}
 
-            if (ModelState.IsValid)
+            if (userEmail == null && ModelState.IsValid)
             {
                 var user = new ApplicationUser
                 {
@@ -116,7 +115,7 @@ namespace CinemaBooking.Controllers
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-
+            TempData["Error"] = "This email address is already in use";
             model.RolesList = _roleManager.Roles.Select(role => new SelectListItem { Value = role.Name, Text = role.Name }).ToList();
             return View(model);
         }

@@ -7,7 +7,7 @@
         }
         public async override Task<IEnumerable<Movie>> GetAllAsync()
         {
-            return await  _tables.Include(c => c.Cinema).ToListAsync();
+            return await  _tables.Include(c => c.Cinema).Include(a=>a.Actor_Movies).ThenInclude(a=>a.Actor).ToListAsync();
         }
           public async override Task<Movie> GetByIdAsync(int id)
         {

@@ -1,4 +1,12 @@
 ﻿@model RegisterUserViewModel
+
+ @if(TempData["Error"] != null)
+            {
+                <div class="col-md-12 alert alert-danger">
+                    <span><b>Sorry!</b> - @TempData["Error"] </span>
+                </div>
+            }
+
 <form  asp-action="AddUser" method="post" >
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
